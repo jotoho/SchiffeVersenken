@@ -48,6 +48,7 @@ void printGameBoard(const BoardType& board) {
         }
         printf("%c\n", static_cast<char>('A' + lineIndex));
     }
+    printLine();
     printNumbers();
 }
 
