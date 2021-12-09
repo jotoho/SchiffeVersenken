@@ -15,13 +15,13 @@ void clearScreen() {
 }
 
 void printLine(){
-    constexpr size_t length = BoardDimensions.columns*4+3;
+    constexpr size_t length = BoardDimensions.columns*4+4;
     for(size_t dash = 0;dash<length;dash++)
         putc('-',stdout);
     putc('\n',stdout);
 }
 
-void printNumbers(){
+void printNumbers() {
     printf("  |");
     for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
         std::cout << ' ' << lineIndex + 1;
