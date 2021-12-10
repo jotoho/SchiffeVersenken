@@ -30,7 +30,7 @@ void printGameBoard(const BoardType& board) {
                 ' ',
                 board[lineIndex][columnIndex] == FieldValue::SHIP_HIT ? 'X'
                                                                       : ' ',
-                ' '};
+                ' ', '\0'};
             printf("%s", chars);
         }
         printf(" %c\n", static_cast<char>('A' + lineIndex));
