@@ -13,8 +13,12 @@ enum class FieldValue : std::uint_least8_t {
     PLACEHOLDER
 };
 
-constexpr size_t rows = 10;
-constexpr size_t columns = 10;
-using BoardType = std::array<std::array<FieldValue, columns>, rows>;
+constexpr struct {
+    const size_t rows = 10;
+    const size_t columns = 10;
+} BoardDimensions;
+
+using BoardType = std::array<std::array<FieldValue, BoardDimensions.columns>,
+                             BoardDimensions.rows>;
 
 #endif  // INCLUDE_GUARD_FIELDINFO_HPP
