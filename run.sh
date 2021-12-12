@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-g++ -std=c++20 -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native -O2 "$1" -pthread
+g++ -std=c++17 -fsanitize=address -fsanitize=leak -fsanitize=undefined \
+    -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native \
+    -O2 "$1" -pthread
 
 if [ -f "$1.clargs" ]
 then
