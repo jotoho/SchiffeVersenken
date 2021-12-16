@@ -14,34 +14,45 @@ void clearScreen() {
 #endif
 }
 
-void printGameBoard(const BoardType& board) {
-    printf("   ");
-    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
-        std::cout << ' ' << lineIndex + 1 << ' ';
-    }
-    printf("    \n");
+void printLine() {
+    constexpr std::size_t length = BoardDimensions.columns * 4 + 4;
+    for (std::size_t dash = 0; dash < length; dash++)
+        putc('-', stdout);
+    putc('\n', stdout);
+}
 
+void printNumbers() {
+    printf("  |");
+    for (std::size_t lineIndex = 0; lineIndex < BoardDimensions.rows;
+         lineIndex++) {
+        std::cout << ' ' << lineIndex + 1;
+        if (lineIndex != BoardDimensions.rows - 1)
+            std::cout << " |";
+    }
+    printf("|\n");
+}
+
+void printGameBoard(const BoardType& board) {
+    printNumbers();
     // Rows
-    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
-        printf(" %c ", static_cast<char>('A' + lineIndex));
+    for (std::size_t lineIndex = 0; lineIndex < BoardDimensions.rows;
+         lineIndex++) {
+        printLine();
+        printf(" %c|", static_cast<char>('A' + lineIndex));
         // Columns
-        for (size_t columnIndex = 0; columnIndex < BoardDimensions.columns;
+        for (std::size_t columnIndex = 0; columnIndex < BoardDimensions.columns;
              columnIndex++) {
             char chars[] = {
                 ' ',
                 board[lineIndex][columnIndex] == FieldValue::SHIP_HIT ? 'X'
                                                                       : ' ',
                 ' ', '\0'};
-            printf("%s", chars);
+            printf("%s|", chars);
         }
-        printf(" %c\n", static_cast<char>('A' + lineIndex));
+        printf("%c\n", static_cast<char>('A' + lineIndex));
     }
-
-    printf("   ");
-    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
-        std::cout << ' ' << lineIndex + 1 << ' ';
-    }
-    printf("   ");
+    printLine();
+    printNumbers();
 }
 
 int main() {
