@@ -14,16 +14,17 @@ void clearScreen() {
 #endif
 }
 
-void printLine(){
-    constexpr size_t length = BoardDimensions.columns*4+4;
-    for(size_t dash = 0;dash<length;dash++)
-        putc('-',stdout);
-    putc('\n',stdout);
+void printLine() {
+    constexpr std::size_t length = BoardDimensions.columns * 4 + 4;
+    for (std::size_t dash = 0; dash < length; dash++)
+        putc('-', stdout);
+    putc('\n', stdout);
 }
 
 void printNumbers() {
     printf("  |");
-    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
+    for (std::size_t lineIndex = 0; lineIndex < BoardDimensions.rows;
+         lineIndex++) {
         std::cout << ' ' << lineIndex + 1;
         if (lineIndex != BoardDimensions.rows - 1)
             std::cout << " |";
@@ -34,11 +35,13 @@ void printNumbers() {
 void printGameBoard(const BoardType& board) {
     printNumbers();
     // Rows
-    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
+    for (std::size_t lineIndex = 0; lineIndex < BoardDimensions.rows;
+         lineIndex++) {
         printLine();
         printf(" %c|", static_cast<char>('A' + lineIndex));
         // Columns
-        for (size_t columnIndex = 0; columnIndex < BoardDimensions.columns; columnIndex++) {
+        for (std::size_t columnIndex = 0; columnIndex < BoardDimensions.columns;
+             columnIndex++) {
             char chars[] = {
                 ' ',
                 board[lineIndex][columnIndex] == FieldValue::SHIP_HIT ? 'X'
