@@ -16,16 +16,17 @@ void clearScreen() {
 
 void printGameBoard(const BoardType& board) {
     printf("   ");
-    for (size_t lineIndex = 0; lineIndex < rows; lineIndex++) {
+    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
         std::cout << ' ' << lineIndex + 1 << ' ';
     }
     printf("    \n");
 
     // Rows
-    for (size_t lineIndex = 0; lineIndex < rows; lineIndex++) {
+    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
         printf(" %c ", static_cast<char>('A' + lineIndex));
         // Columns
-        for (size_t columnIndex = 0; columnIndex < columns; columnIndex++) {
+        for (size_t columnIndex = 0; columnIndex < BoardDimensions.columns;
+             columnIndex++) {
             char chars[] = {
                 ' ',
                 board[lineIndex][columnIndex] == FieldValue::SHIP_HIT ? 'X'
@@ -37,7 +38,7 @@ void printGameBoard(const BoardType& board) {
     }
 
     printf("   ");
-    for (size_t lineIndex = 0; lineIndex < rows; lineIndex++) {
+    for (size_t lineIndex = 0; lineIndex < BoardDimensions.rows; lineIndex++) {
         std::cout << ' ' << lineIndex + 1 << ' ';
     }
     printf("   ");
