@@ -35,16 +35,17 @@ struct BoardPoint {
     const std::size_t y;
 
     BoardPoint() = delete;
-    BoardPoint(const std::size_t x, const std::size_t y) : x(x), y(y) {
+    constexpr BoardPoint(const std::size_t x, const std::size_t y)
+        : x(x), y(y) {
         if (x >= BoardDimensions.columns || y >= BoardDimensions.rows)
             throw std::invalid_argument{
                 "BoardPoints must be within the size constraints of the board"};
     }
 
-    BoardPoint operator+(const BoardPoint& otherPoint) const {
+    constexpr BoardPoint operator+(const BoardPoint& otherPoint) const {
         return BoardPoint{this->x + otherPoint.x, this->y + otherPoint.y};
     }
-    BoardPoint operator-(const BoardPoint& otherPoint) const {
+    constexpr BoardPoint operator-(const BoardPoint& otherPoint) const {
         // Leaving out the braces on this if will make gcc 11.1.0 not correctly
         // connect it with the else-block
         if (this->x < otherPoint.x || this->y < otherPoint.y) {
@@ -53,6 +54,10 @@ struct BoardPoint {
                 "underflowed)"};
         } else
             return BoardPoint{this->x - otherPoint.x, this->y - otherPoint.y};
+    }
+
+    constexpr bool operator==(const BoardPoint& otherPoint) const {
+        return this->x == otherPoint.x && this->y == otherPoint.y;
     }
 };
 
