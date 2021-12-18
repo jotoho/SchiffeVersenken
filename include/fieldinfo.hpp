@@ -4,6 +4,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <stdexcept>
 
 enum class FieldValue : std::uint_least8_t {
     EMPTY,
@@ -44,11 +45,13 @@ struct BoardPoint {
         return BoardPoint{this->x + otherPoint.x, this->y + otherPoint.y};
     }
     BoardPoint operator-(const BoardPoint& otherPoint) const {
-        if (this->x < otherPoint.x || this->y < otherPoint.y)
+        // Leaving out the braces on this if will make gcc 11.1.0 not correctly
+        // connect it with the else-block
+        if (this->x < otherPoint.x || this->y < otherPoint.y) {
             throw std::range_error{
                 "Point does not exist on board (coords would have "
                 "underflowed)"};
-        else
+        } else
             return BoardPoint{this->x - otherPoint.x, this->y - otherPoint.y};
     }
 };
