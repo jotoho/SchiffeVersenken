@@ -1,16 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <algorithm>
-#include <array>
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
 
 #include "../src/input.cpp"
 
 int main() {
-    char a = '\0';
-    printf("Erst Buchstabe dann Zahl \nKoordinaten eingeben :");
-    scanf("%s", &a);
-    BoardPoint neu = inputTranslator(&a);
-    printf("(%d|%d)\n", neu.x, neu.y);
+    std::string a;
+    printf("Erst Buchstabe dann Zahl\nKoordinaten eingeben: ");
+    std::cin >> a;
+    BoardPoint neu = inputTranslator(a);
+    std::cout << '(' << neu.x << '|' << neu.y << ")\n";
     return EXIT_SUCCESS;
 }
