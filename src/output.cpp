@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <array>
+#include <cstdio>
+#include <sstream>
 #include <iostream>
+#include <iomanip>
 
 #include "../include/fieldinfo.hpp"
 
@@ -15,21 +18,21 @@ void clearScreen() {
 }
 
 void printLine() {
-    constexpr std::size_t length = BoardDimensions.columns * 4 + 4;
+    constexpr std::size_t length = BoardDimensions.columns * 5 + 4;
     for (std::size_t dash = 0; dash < length; dash++)
         putc('-', stdout);
     putc('\n', stdout);
 }
 
 void printNumbers() {
-    printf("  |");
+    printf("  | ");
     for (std::size_t lineIndex = 0; lineIndex < BoardDimensions.rows;
          lineIndex++) {
-        std::cout << ' ' << lineIndex + 1;
+         std::cout << std::setfill('0') << std::setw(2) << lineIndex + 1;
         if (lineIndex != BoardDimensions.rows - 1)
-            std::cout << " |";
+            std::cout << " | ";
     }
-    printf("|\n");
+    printf(" |\n");
 }
 
 void printGameBoard(const BoardType& board) {
@@ -47,7 +50,7 @@ void printGameBoard(const BoardType& board) {
                 board[lineIndex][columnIndex] == FieldValue::SHIP_HIT ? 'X'
                                                                       : ' ',
                 ' ', '\0'};
-            printf("%s|", chars);
+            printf("%s |", chars);
         }
         printf("%c\n", static_cast<char>('A' + lineIndex));
     }
