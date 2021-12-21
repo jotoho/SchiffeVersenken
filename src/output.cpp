@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <array>
 #include <cstdio>
-#include <sstream>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
+#include <sstream>
 
 #include "../include/fieldinfo.hpp"
 
@@ -28,7 +28,7 @@ void printNumbers() {
     printf("  | ");
     for (std::size_t lineIndex = 0; lineIndex < BoardDimensions.rows;
          lineIndex++) {
-         std::cout << std::setfill('0') << std::setw(2) << lineIndex + 1;
+        std::cout << std::setfill('0') << std::setw(2) << lineIndex + 1;
         if (lineIndex != BoardDimensions.rows - 1)
             std::cout << " | ";
     }
