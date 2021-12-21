@@ -1,12 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <algorithm>
-#include <array>
 #include <cmath>
-#include <cstdio>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 
 #include "../include/fieldinfo.hpp"
 
