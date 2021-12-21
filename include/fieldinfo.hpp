@@ -15,8 +15,8 @@ enum class FieldValue : std::uint_least8_t {
 };
 
 constexpr struct {
-    const size_t rows = 10;
-    const size_t columns = 10;
+    const size_t rows = 15;
+    const size_t columns = 15;
 } BoardDimensions;
 
 using BoardType = std::array<std::array<FieldValue, BoardDimensions.columns>,
