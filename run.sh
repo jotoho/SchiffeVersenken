@@ -4,7 +4,7 @@ set -euo pipefail
 
 g++ -std=c++17 -fsanitize=address -fsanitize=leak -fsanitize=undefined \
     -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native \
-    -O2 "$1" -pthread
+    -O2 $(find src/ -iname '*.cpp' -not -iname 'main.cpp' -type f) "$1" -pthread
 
 if [ -f "$1.clargs" ]
 then

@@ -1,6 +1,6 @@
 #include <charconv>
 #include <iostream>
-#include "../include/fieldinfo.hpp"
+#include "../include/boardpoint.hpp"
 
 BoardPoint inputTranslator(const std::string input) {
     const std::size_t letter = (int)(input[0] - 'A');
