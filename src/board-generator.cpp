@@ -28,11 +28,6 @@ static std::uint_fast64_t genRandom64bitVal() {
     return (genRandom32bitVal() << 32) | genRandom32bitVal();
 }
 
-constexpr static bool isInBounds(const std::size_t row,
-                                 const std::size_t column) {
-    return (row < BoardDimensions.rows) && (column < BoardDimensions.columns);
-}
-
 static FieldValue& getRefFromPoint(BoardType& board, const BoardPoint& point) {
     return board[point.x][point.y];
 }
