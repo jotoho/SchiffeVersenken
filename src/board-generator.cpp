@@ -1,10 +1,8 @@
 #include <algorithm>
 #include <random>
+#include <stdexcept>
 #include <vector>
-#include "../include/fieldinfo.hpp"
-
-using BoardPointRange = std::vector<BoardPoint>;
-enum class CardinalDirection : std::uint_least8_t { NORTH, EAST, SOUTH, WEST };
+#include "../include/boardpoint.hpp"
 
 constexpr BoardType generateGameBoardEmpty() {
     BoardType board{};
@@ -28,32 +26,6 @@ static std::uint_fast64_t genRandom64bitVal() {
     return (genRandom32bitVal() << 32) | genRandom32bitVal();
 }
 
-constexpr static bool isInBounds(const std::size_t row,
-                                 const std::size_t column) {
-    return (row < BoardDimensions.rows) && (column < BoardDimensions.columns);
-}
-
-static FieldValue& getRefFromPoint(BoardType& board, const BoardPoint& point) {
-    return board[point.x][point.y];
-}
-
-static BoardPoint stepsFromPoint(const BoardPoint& originPoint,
-                                 const CardinalDirection direction,
-                                 const std::size_t numberOfSteps) {
-    switch (direction) {
-        case CardinalDirection::NORTH:
-            return originPoint - BoardPoint{0, numberOfSteps};
-        case CardinalDirection::EAST:
-            return originPoint + BoardPoint{numberOfSteps, 0};
-        case CardinalDirection::SOUTH:
-            return originPoint + BoardPoint{0, numberOfSteps};
-        case CardinalDirection::WEST:
-            return originPoint - BoardPoint{numberOfSteps, 0};
-        default:
-            throw std::invalid_argument{"Invalid direction was provided"};
-    }
-}
-
 static void attemptPlacingPlaceholder(BoardType& board,
                                       const BoardPoint& center,
                                       const CardinalDirection direction) {
@@ -69,7 +41,7 @@ static void attemptPlacingPlaceholder(BoardType& board,
 static bool isThisAreaOnBoardEmpty(const BoardType& board,
                                    const BoardPointRange& points) {
     for (const auto& point : points)
-        if (board[point.x][point.y] != FieldValue::EMPTY)
+        if (getRefFromPoint(board, point) != FieldValue::EMPTY)
             return false;
     return true;
 }
@@ -91,23 +63,6 @@ static BoardPoint chooseRandomBoardPoint() {
     return {
         static_cast<std::size_t>(genRandom64bitVal()) % BoardDimensions.columns,
         static_cast<std::size_t>(genRandom64bitVal()) % BoardDimensions.rows};
-}
-
-static BoardPointRange generatePointRangeBetween(
-    const BoardPoint& startPoint,
-    const BoardPoint& endPoint,
-    const CardinalDirection direction) {
-    BoardPointRange shipPoints;
-    shipPoints.emplace_back(startPoint);
-
-    // While list does not contain endPoint
-    while (std::find(shipPoints.begin(), shipPoints.end(), endPoint) ==
-           shipPoints.end()) {
-        const auto lastPoint = shipPoints.at(shipPoints.size() - 1);
-        shipPoints.emplace_back(stepsFromPoint(lastPoint, direction, 1));
-    }
-
-    return shipPoints;
 }
 
 struct InsufficientBoardSpaceError : std::runtime_error {

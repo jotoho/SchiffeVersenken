@@ -1,7 +1,8 @@
+#include <cstdlib>
 #include <ctime>
 
-#include "../src/board-generator.cpp"
-#include "../src/output.cpp"
+#include "../include/board-generator.hpp"
+#include "../include/output.hpp"
 
 int main() {
     std::srand(std::time(nullptr));

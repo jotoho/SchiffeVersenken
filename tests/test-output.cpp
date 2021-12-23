@@ -1,4 +1,5 @@
-#include "../src/output.cpp"
+#include <cstdlib>
+#include "../include/output.hpp"
 
 int main() {
     BoardType board;

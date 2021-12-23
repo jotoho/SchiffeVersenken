@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "../src/input.cpp"
+#include "../include/input.hpp"
 
 int main() {
     std::string a;
