@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <unordered_map>
 
 #include "../include/fieldinfo.hpp"
 
@@ -42,7 +43,10 @@ void printNumbers() {
     printf(" |\n");
 }
 
-void printGameBoard(const BoardType& board) {
+void printGameBoard(
+    const BoardType& board,
+    const std::unordered_map<const FieldValue, const char>& translationTable,
+    const char defaultChar = ' ') {
     const std::size_t paddingLength =
         (static_cast<std::size_t>(std::log10(BoardDimensions.columns)) + 3U) /
         2U;
@@ -59,14 +63,33 @@ void printGameBoard(const BoardType& board) {
         // Columns
         for (std::size_t columnIndex = 0; columnIndex < BoardDimensions.columns;
              columnIndex++) {
-            std::cout << paddingStr
-                      << (board[lineIndex][columnIndex] == FieldValue::SHIP_HIT
-                              ? 'X'
-                              : ' ')
-                      << paddingStr << '|';
+            const auto fieldValue = board[lineIndex][columnIndex];
+            std::cout << paddingStr;
+            try {
+                std::cout << translationTable.at(fieldValue);
+            } catch (const std::out_of_range& e) {
+                std::cout << defaultChar;
+            }
+            std::cout << paddingStr << '|';
         }
         printf("%c\n", static_cast<char>('A' + lineIndex));
     }
     printLine();
     printNumbers();
+}
+
+const std::unordered_map<const FieldValue, const char>&
+transparentTranslationTable() {
+    static const std::unordered_map<const FieldValue, const char>
+        translationTable{{FieldValue::SHIP_HIT, 'X'},
+                         {FieldValue::SHIP, '#'},
+                         {FieldValue::MISS, '~'}};
+    return translationTable;
+}
+
+const std::unordered_map<const FieldValue, const char>&
+defaultTranslationTable() {
+    static const std::unordered_map<const FieldValue, const char>
+        translationTable{{FieldValue::SHIP_HIT, 'X'}, {FieldValue::MISS, '~'}};
+    return translationTable;
 }
