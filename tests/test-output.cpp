@@ -1,6 +1,6 @@
 #include <cstdlib>
-#include "../include/output.hpp"
 #include "../include/board-generator.hpp"
+#include "../include/output.hpp"
 
 int main() {
     BoardType board = generateGameBoardRandom();
