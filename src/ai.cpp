@@ -12,11 +12,11 @@ void hitShip(BoardType& board, const BoardPoint& lastShot) {
             [[fallthrough]];
         case FieldValue::PLACEHOLDER:
             getRefFromPoint(board, newLocation) = FieldValue::MISS;
-            std::puts("Daneben!");
+            //std::puts("Daneben!");
             break;
         case FieldValue::SHIP:
             getRefFromPoint(board, newLocation) = FieldValue::SHIP_HIT;
-            std::puts("Treffer!");
+            //std::puts("Treffer!");
             hitShip(board, newLocation);
             break;
         case FieldValue::MISS:
@@ -36,11 +36,11 @@ void aiShotRandom(BoardType& board) {
             [[fallthrough]];
         case FieldValue::PLACEHOLDER:
             getRefFromPoint(board, target) = FieldValue::MISS;
-            std::puts("Daneben!");
+            //std::puts("Daneben!");
             break;
         case FieldValue::SHIP:
             getRefFromPoint(board, target) = FieldValue::SHIP_HIT;
-            std::puts("Treffer!");
+            //std::puts("Treffer!");
             hitShip(board, target);
             break;
         case FieldValue::MISS:
