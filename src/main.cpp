@@ -14,9 +14,9 @@ int main() {
     auto computerBoard = generateGameBoardRandom();
 
     // Try to determine the winner
-    const auto winnerID = playGame(playerBoard, computerBoard);
+    const WinnerID winnerID = playGame(playerBoard, computerBoard);
 
     // Announce winner
-    std::cout << "Player " << winnerID << " has won!\n";
+    std::cout << "Player " << std::to_string(winnerID) << " has won!\n";
     return EXIT_SUCCESS;
 }
