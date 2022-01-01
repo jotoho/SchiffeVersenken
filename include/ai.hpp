@@ -3,7 +3,7 @@
 
 #include "./boardpoint.hpp"
 
-void aiShotRandom(BoardType& board);
+bool aiShotRandom(BoardType& board);
 void hitShip(BoardType& board, const BoardPoint& lastShot);
 
 #endif  // INCLUDE_GUARD_AI_HPP
