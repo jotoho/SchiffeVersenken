@@ -1,14 +1,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <limits>
 
-#include "../include/ai.hpp"
 #include "../include/board-generator.hpp"
-#include "../include/boardpoint.hpp"
 #include "../include/gamelogic.hpp"
-#include "../include/input.hpp"
-#include "../include/output.hpp"
 
 int main() {
     // Initialize RNG

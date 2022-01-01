@@ -1,3 +1,4 @@
+#include "../include/gamelogic.hpp"
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
@@ -8,8 +9,6 @@
 #include "../include/global-config.hpp"
 #include "../include/input.hpp"
 #include "../include/output.hpp"
-
-#include "../include/gamelogic.hpp"
 
 void writeProgramInfo(std::ostream& out) {
     out << "SchiffeVersenken version " << GlobalConf.version << '\n'
