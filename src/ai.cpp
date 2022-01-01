@@ -44,7 +44,9 @@ bool aiShotRandom(BoardType& board) {
         case FieldValue::SHIP_HIT:
             return aiShotRandom(board);
         default:
-            std::cerr << "siShotRandom: Unexpected value in field, closing application." << std::endl;
+            std::cerr << "aiShotRandom: Unexpected value in field, closing "
+                         "application."
+                      << std::endl;
             std::exit(EXIT_FAILURE);
     }
 }
