@@ -1,9 +1,10 @@
 #include <charconv>
 #include <iostream>
 #include "../include/boardpoint.hpp"
+#include "../include/global-config.hpp"
 
 BoardPoint inputTranslator(const std::string input) {
-    const std::size_t letter = (int)(input[0] - 'A');
+    const std::size_t rowCoordinate = input[0] - 'A';
     const std::string numberString = input.substr(1);
     std::size_t number{};
     std::from_chars(numberString.c_str(),
@@ -11,8 +12,15 @@ BoardPoint inputTranslator(const std::string input) {
 
     if (number == 0) {
         std::cerr << "ERROR: There is no column 0\n";
-        std::exit(1);
+        std::exit(EXIT_FAILURE);
     }
-    BoardPoint playerInput{number - 1, letter};
+
+    if constexpr (GlobalConf.debugMode) {
+        std::cerr << "Creating board point object with coordinates ("
+                  << std::to_string(number - 1) << ", "
+                  << std::to_string(rowCoordinate) << ')' << std::endl;
+    }
+
+    const BoardPoint playerInput{number - 1, rowCoordinate};
     return playerInput;
 }
