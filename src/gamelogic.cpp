@@ -107,7 +107,7 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
         if (doPlayerTurn(computerBoard)) {
             std::cout << "Hit!\n";
 
-            // If a hit occured, we need to check for a winner
+            // If a hit occured, we need to check if that ends the game
             const auto potentialWinnerID =
                 checkWinner(playerBoard, computerBoard);
             if (potentialWinnerID)
@@ -119,7 +119,7 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
         if (doComputerTurn(playerBoard)) {
             std::cout << "You were hit!\n";
 
-            // If a hit occured, we need to check for a winner
+            // If a hit occured, we need to check if that ends the game
             const auto potentialWinnerID =
                 checkWinner(playerBoard, computerBoard);
             if (potentialWinnerID)
