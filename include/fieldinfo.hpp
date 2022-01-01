@@ -18,6 +18,10 @@ constexpr struct {
     const size_t columns = 15;
 } BoardDimensions;
 
+// There must never be more rows than can be expressed by one upper-case
+// alphanumeric letter
+static_assert(BoardDimensions.rows <= 'Z' - 'A' + 1);
+
 using BoardType = std::array<std::array<FieldValue, BoardDimensions.columns>,
                              BoardDimensions.rows>;
 
