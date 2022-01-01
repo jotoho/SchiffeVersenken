@@ -102,10 +102,8 @@ void waitForEnter() {
 }
 
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
-    // Loop until a winner is returned or round counter threatens
-    // to overflow
-    for (unsigned long long int round = 1;
-         round < std::numeric_limits<decltype(round)>::max(); round++) {
+    // Loop until a winner is determined and returned
+    while (true) {
         if (doPlayerTurn(computerBoard)) {
             std::cout << "Hit!\n";
 
@@ -130,8 +128,4 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
             std::cout << "The enemy missed.\n";
         waitForEnter();
     }
-
-    // If for ends without returning, end program
-    std::cerr << "Reached maximum round. Terminating!" << std::endl;
-    std::exit(EXIT_FAILURE);
 }
