@@ -62,10 +62,10 @@ BoardPoint stepsFromPoint(const BoardPoint& originPoint,
 }
 
 FieldValue& getRefFromPoint(BoardType& board, const BoardPoint& point) {
-    return board[point.x][point.y];
+    return board[point.y][point.x];
 }
 
 const FieldValue& getRefFromPoint(const BoardType& board,
                                   const BoardPoint& point) {
-    return board[point.x][point.y];
+    return board[point.y][point.x];
 }
