@@ -84,7 +84,7 @@ static void randomlyPlaceShip(BoardType& board, const std::size_t shipLength) {
 
         try {
             const BoardPoint endPoint =
-                stepsFromPoint(selectedPoint, direction, shipLength);
+                stepsFromPoint(selectedPoint, direction, shipLength - 1);
 
             const BoardPointRange shipPoints =
                 generatePointRangeBetween(selectedPoint, endPoint, direction);
