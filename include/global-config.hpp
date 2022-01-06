@@ -5,7 +5,7 @@
 
 constexpr struct {
     const std::string_view version = "PRE-ALPHA";
-    const bool debugMode = true;
+    const bool debugMode = false;
 } GlobalConf;
 
 #endif  // INCLUDE_GUARD_SCHIFFEVERSENKEN_GLOBALCONF_HPP
