@@ -104,15 +104,19 @@ void waitForEnter() {
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
     // Loop until a winner is determined and returned
     while (true) {
-        if (doPlayerTurn(computerBoard)) {
+        bool playerHitOnce = false;
+        while (doPlayerTurn(computerBoard)) {
             std::cout << "Hit!\n";
+            playerHitOnce = true;
 
             // If a hit occured, we need to check if that ends the game
             const auto potentialWinnerID =
                 checkWinner(playerBoard, computerBoard);
             if (potentialWinnerID)
                 return potentialWinnerID;
-        } else
+        }
+
+        if (!playerHitOnce)
             std::cout << "Miss.\n";
         waitForEnter();
 
