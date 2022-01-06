@@ -1,6 +1,6 @@
-#include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 #include "../include/boardpoint.hpp"
 
 void hitShip(BoardType& board, const BoardPoint& lastShot) {
@@ -12,11 +12,9 @@ void hitShip(BoardType& board, const BoardPoint& lastShot) {
             [[fallthrough]];
         case FieldValue::PLACEHOLDER:
             getRefFromPoint(board, newLocation) = FieldValue::MISS;
-            std::puts("Daneben!");
             break;
         case FieldValue::SHIP:
             getRefFromPoint(board, newLocation) = FieldValue::SHIP_HIT;
-            std::puts("Treffer!");
             hitShip(board, newLocation);
             break;
         case FieldValue::MISS:
@@ -27,7 +25,7 @@ void hitShip(BoardType& board, const BoardPoint& lastShot) {
     }
 }
 
-void aiShotRandom(BoardType& board) {
+bool aiShotRandom(BoardType& board) {
     const BoardPoint target{std::rand() % BoardDimensions.columns,
                             std::rand() % BoardDimensions.rows};
 
@@ -36,17 +34,19 @@ void aiShotRandom(BoardType& board) {
             [[fallthrough]];
         case FieldValue::PLACEHOLDER:
             getRefFromPoint(board, target) = FieldValue::MISS;
-            std::puts("Daneben!");
-            break;
+            return false;
         case FieldValue::SHIP:
             getRefFromPoint(board, target) = FieldValue::SHIP_HIT;
-            std::puts("Treffer!");
             hitShip(board, target);
-            break;
+            return true;
         case FieldValue::MISS:
             [[fallthrough]];
         case FieldValue::SHIP_HIT:
-            aiShotRandom(board);
-            break;
+            return aiShotRandom(board);
+        default:
+            std::cerr << "aiShotRandom: Unexpected value in field, closing "
+                         "application."
+                      << std::endl;
+            std::exit(EXIT_FAILURE);
     }
 }

@@ -4,9 +4,18 @@
 #include "../include/boardpoint.hpp"
 
 BoardPoint::BoardPoint(const std::size_t x, const std::size_t y) : x(x), y(y) {
-    if (x >= BoardDimensions.columns || y >= BoardDimensions.rows)
+    if (x >= BoardDimensions.columns)
         throw std::invalid_argument{
-            "BoardPoints must be within the size constraints of the board"};
+            "Attempt to create BoardPoint with too high column number detected "
+            "(received: " +
+            std::to_string(x) +
+            ", max: " + std::to_string(BoardDimensions.columns - 1) + ')'};
+    else if (y >= BoardDimensions.rows)
+        throw std::invalid_argument{
+            "Attempt to create BoardPoint with too high row number detected "
+            "(received: " +
+            std::to_string(y) +
+            ", max: " + std::to_string(BoardDimensions.rows - 1) + ')'};
 }
 
 BoardPoint BoardPoint::operator+(const BoardPoint& otherPoint) const {
