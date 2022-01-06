@@ -1,28 +1,39 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <stdexcept>
 #include "../include/boardpoint.hpp"
 
 void hitShip(BoardType& board, const BoardPoint& lastShot) {
-    const auto newLocation =
-        stepsFromPoint(lastShot, static_cast<CardinalDirection>(rand() % 4), 1);
+    bool error;
+    do {
+        error = false;
+        try {
+            const auto newLocation = stepsFromPoint(
+                lastShot, static_cast<CardinalDirection>(rand() % 4), 1);
 
-    switch (getRefFromPoint(board, newLocation)) {
-        case FieldValue::EMPTY:
-            [[fallthrough]];
-        case FieldValue::PLACEHOLDER:
-            getRefFromPoint(board, newLocation) = FieldValue::MISS;
-            break;
-        case FieldValue::SHIP:
-            getRefFromPoint(board, newLocation) = FieldValue::SHIP_HIT;
-            hitShip(board, newLocation);
-            break;
-        case FieldValue::MISS:
-            [[fallthrough]];
-        case FieldValue::SHIP_HIT:
-            hitShip(board, lastShot);
-            break;
-    }
+            switch (getRefFromPoint(board, newLocation)) {
+                case FieldValue::EMPTY:
+                    [[fallthrough]];
+                case FieldValue::PLACEHOLDER:
+                    getRefFromPoint(board, newLocation) = FieldValue::MISS;
+                    break;
+                case FieldValue::SHIP:
+                    getRefFromPoint(board, newLocation) = FieldValue::SHIP_HIT;
+                    hitShip(board, newLocation);
+                    break;
+                case FieldValue::MISS:
+                    [[fallthrough]];
+                case FieldValue::SHIP_HIT:
+                    hitShip(board, lastShot);
+                    break;
+            }
+        } catch (const std::invalid_argument& unused) {
+            error = true;
+        } catch (const std::range_error& unused) {
+            error = true;
+        }
+    } while (error);
 }
 
 bool aiShotRandom(BoardType& board) {
