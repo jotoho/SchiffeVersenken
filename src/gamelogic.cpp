@@ -15,6 +15,14 @@ void writeProgramInfo(std::ostream& out) {
         << std::endl;
 }
 
+void refreshBoard(const BoardType& board, const char* const boardDiscription) {
+    clearScreen();
+    writeProgramInfo(std::cout);
+    std::cout << boardDiscription << '\n';
+    printGameBoard(board, defaultTranslationTable());
+    std::cout << '\n';
+}
+
 static bool hasLost(const BoardType& board) {
     for (const auto& segment : board)
         if (std::find(segment.begin(), segment.end(), FieldValue::SHIP) !=
@@ -43,11 +51,7 @@ WinnerID checkWinner(const BoardType& boardPlayer1,
 }
 
 bool doPlayerTurn(BoardType& computerBoard) {
-    clearScreen();
-    std::cout << "Your enemy's ships:\n";
-    printGameBoard(computerBoard, defaultTranslationTable());
-    std::cout << '\n';
-
+    refreshBoard(computerBoard, "Your enemies ships");
     // Repeat input until a valid pair of coordinates was entered
     while (true) {
         std::cout << "Where do you want to shoot? ";
@@ -78,10 +82,8 @@ bool doPlayerTurn(BoardType& computerBoard) {
 }
 
 bool doComputerTurn(BoardType& playerBoard) {
-    clearScreen();
     const auto result = aiShotRandom(playerBoard);
-    std::cout << "Your ships:\n";
-    printGameBoard(playerBoard, transparentTranslationTable());
+    refreshBoard(playerBoard, "Your ships:");
     return result;
 }
 
@@ -106,6 +108,7 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
     while (true) {
         bool playerHitOnce = false;
         while (doPlayerTurn(computerBoard)) {
+            refreshBoard(computerBoard, "Your enemies ships");
             std::cout << "Hit!\n";
             playerHitOnce = true;
 
@@ -116,8 +119,10 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 return potentialWinnerID;
         }
 
-        if (!playerHitOnce)
+        if (!playerHitOnce) {
+            refreshBoard(computerBoard, "Your enemies ships");
             std::cout << "Miss.\n";
+        }
         waitForEnter();
 
         if (doComputerTurn(playerBoard)) {
@@ -128,8 +133,9 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 checkWinner(playerBoard, computerBoard);
             if (potentialWinnerID)
                 return potentialWinnerID;
-        } else
+        } else {
             std::cout << "The enemy missed.\n";
+        }
         waitForEnter();
     }
 }
