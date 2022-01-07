@@ -1,3 +1,4 @@
+#include "../include/output.hpp"
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -46,7 +47,7 @@ void printNumbers() {
 void printGameBoard(
     const BoardType& board,
     const std::unordered_map<const FieldValue, const char>& translationTable,
-    const char defaultChar = ' ') {
+    const char defaultChar) {
     const std::size_t paddingLength =
         (static_cast<std::size_t>(std::log10(BoardDimensions.columns)) + 3U) /
         2U;
@@ -78,8 +79,7 @@ void printGameBoard(
     printNumbers();
 }
 
-const std::unordered_map<const FieldValue, const char>&
-transparentTranslationTable() {
+OutputTranslationTable transparentTranslationTable() {
     static const std::unordered_map<const FieldValue, const char>
         translationTable{{FieldValue::SHIP_HIT, 'X'},
                          {FieldValue::SHIP, '#'},
@@ -87,8 +87,7 @@ transparentTranslationTable() {
     return translationTable;
 }
 
-const std::unordered_map<const FieldValue, const char>&
-defaultTranslationTable() {
+OutputTranslationTable defaultTranslationTable() {
     static const std::unordered_map<const FieldValue, const char>
         translationTable{{FieldValue::SHIP_HIT, 'X'}, {FieldValue::MISS, '~'}};
     return translationTable;
