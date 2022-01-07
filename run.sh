@@ -4,8 +4,8 @@ set -euo pipefail
 
 g++ -std=c++17 -fsanitize=address -fsanitize=leak -fsanitize=undefined \
     -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native \
-    -fdata-sections -ffunction-sections -O2 \
-    $(find src/ -iname '*.cpp' -not -iname 'main.cpp' -type f) "$1" -pthread -Wl,--gc-sections
+    -fdata-sections -ffunction-sections -O2 -Wl,--gc-sections \
+    $(find src/ -iname '*.cpp' -not -iname 'main.cpp' -type f) "$1"
 
 if [ -f "$1.clargs" ]
 then
