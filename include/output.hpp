@@ -4,7 +4,8 @@
 #include <unordered_map>
 #include "./fieldinfo.hpp"
 
-using OutputTranslationTable = const std::unordered_map<const FieldValue, const char>&;
+using OutputTranslationTable =
+    const std::unordered_map<const FieldValue, const char>&;
 
 const std::unordered_map<const FieldValue, const char>&
 defaultTranslationTable();

@@ -79,8 +79,7 @@ void printGameBoard(
     printNumbers();
 }
 
-OutputTranslationTable
-transparentTranslationTable() {
+OutputTranslationTable transparentTranslationTable() {
     static const std::unordered_map<const FieldValue, const char>
         translationTable{{FieldValue::SHIP_HIT, 'X'},
                          {FieldValue::SHIP, '#'},
@@ -88,8 +87,7 @@ transparentTranslationTable() {
     return translationTable;
 }
 
-OutputTranslationTable
-defaultTranslationTable() {
+OutputTranslationTable defaultTranslationTable() {
     static const std::unordered_map<const FieldValue, const char>
         translationTable{{FieldValue::SHIP_HIT, 'X'}, {FieldValue::MISS, '~'}};
     return translationTable;

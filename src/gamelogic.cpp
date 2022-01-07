@@ -15,7 +15,9 @@ void writeProgramInfo(std::ostream& out) {
         << std::endl;
 }
 
-void refreshBoard(const BoardType& board, const char* const boardDiscription, OutputTranslationTable translationTable) {
+void refreshBoard(const BoardType& board,
+                  const char* const boardDiscription,
+                  OutputTranslationTable translationTable) {
     clearScreen();
     writeProgramInfo(std::cout);
     std::cout << boardDiscription << '\n';
@@ -51,7 +53,8 @@ WinnerID checkWinner(const BoardType& boardPlayer1,
 }
 
 bool doPlayerTurn(BoardType& computerBoard) {
-    refreshBoard(computerBoard, "Your enemies ships",defaultTranslationTable());
+    refreshBoard(computerBoard, "Your enemies ships",
+                 defaultTranslationTable());
     // Repeat input until a valid pair of coordinates was entered
     while (true) {
         std::cout << "Where do you want to shoot? ";
@@ -83,7 +86,7 @@ bool doPlayerTurn(BoardType& computerBoard) {
 
 bool doComputerTurn(BoardType& playerBoard) {
     const auto result = aiShotRandom(playerBoard);
-    refreshBoard(playerBoard, "Your ships:",transparentTranslationTable());
+    refreshBoard(playerBoard, "Your ships:", transparentTranslationTable());
     return result;
 }
 
@@ -108,7 +111,8 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
     while (true) {
         bool playerHitOnce = false;
         while (doPlayerTurn(computerBoard)) {
-            refreshBoard(computerBoard, "Your enemies ships",defaultTranslationTable());
+            refreshBoard(computerBoard, "Your enemies ships",
+                         defaultTranslationTable());
             std::cout << "Hit!\n";
             playerHitOnce = true;
 
@@ -120,7 +124,8 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
         }
 
         if (!playerHitOnce) {
-            refreshBoard(computerBoard, "Your enemies ships",defaultTranslationTable());
+            refreshBoard(computerBoard, "Your enemies ships",
+                         defaultTranslationTable());
             std::cout << "Miss.\n";
         }
         waitForEnter();
