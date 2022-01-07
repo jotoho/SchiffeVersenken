@@ -60,26 +60,31 @@ bool doPlayerTurn(BoardType& computerBoard) {
         std::cout << "Where do you want to shoot? ";
         std::string userInput{};
         std::getline(std::cin, userInput);
-        auto& target =
-            getRefFromPoint(computerBoard, inputTranslator(userInput));
+        try {
+            auto& target =
+                getRefFromPoint(computerBoard, inputTranslator(userInput));
 
-        switch (target) {
-            case FieldValue::MISS:
-                [[fallthrough]];
-            case FieldValue::SHIP_HIT:
-                std::cout << "You already shot there once!\n";
-                continue;
-            case FieldValue::EMPTY:
-                [[fallthrough]];
-            case FieldValue::PLACEHOLDER:
-                target = FieldValue::MISS;
-                return false;
-            case FieldValue::SHIP:
-                target = FieldValue::SHIP_HIT;
-                return true;
-            default:
-                std::cerr << "Invalid state of field on board. Terminating!\n";
-                std::exit(EXIT_FAILURE);
+            switch (target) {
+                case FieldValue::MISS:
+                    [[fallthrough]];
+                case FieldValue::SHIP_HIT:
+                    std::cout << "You already shot there once!\n";
+                    continue;
+                case FieldValue::EMPTY:
+                    [[fallthrough]];
+                case FieldValue::PLACEHOLDER:
+                    target = FieldValue::MISS;
+                    return false;
+                case FieldValue::SHIP:
+                    target = FieldValue::SHIP_HIT;
+                    return true;
+                default:
+                    std::cerr
+                        << "Invalid state of field on board. Terminating!\n";
+                    std::exit(EXIT_FAILURE);
+            }
+        } catch (const std::invalid_argument& unused) {
+            std::cout << "Please enter valid coordinates!\n";
         }
     }
 }
@@ -138,9 +143,8 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 checkWinner(playerBoard, computerBoard);
             if (potentialWinnerID)
                 return potentialWinnerID;
-        } else {
+        } else
             std::cout << "The enemy missed.\n";
-        }
         waitForEnter();
     }
 }

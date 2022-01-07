@@ -10,10 +10,8 @@ BoardPoint inputTranslator(const std::string input) {
     std::from_chars(numberString.c_str(),
                     numberString.c_str() + numberString.size(), number);
 
-    if (number == 0) {
-        std::cerr << "ERROR: There is no column 0\n";
-        std::exit(EXIT_FAILURE);
-    }
+    if (number == 0)
+        throw std::invalid_argument{"There is no column 0!"};
 
     if constexpr (GlobalConf.debugMode) {
         std::cerr << "Creating board point object with coordinates ("
