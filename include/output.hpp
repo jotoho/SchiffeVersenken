@@ -26,6 +26,8 @@ void clearScreen();
 void printLine();
 // Prints column labels and separators between them
 void printNumbers();
+// Prints basic usage instructions
+void printTutorial();
 // Prints the main body of the given game board
 // using the settings in
 void printGameBoard(const BoardType& board,
