@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-
 #include "../include/board-generator.hpp"
 #include "../include/gamelogic.hpp"
 

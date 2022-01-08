@@ -3,7 +3,9 @@
 
 #include "./fieldinfo.hpp"
 
+// Returns an empty gameboard (all field set to EMPTY)
 constexpr BoardType generateGameBoardEmpty();
+// Return a randomly populated game board
 BoardType generateGameBoardRandom();
 
 #endif  // INCLUDE_GUARD_BOARDGEN_HPP

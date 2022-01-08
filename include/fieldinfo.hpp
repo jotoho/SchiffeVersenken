@@ -5,14 +5,22 @@
 #include <cstddef>
 #include <cstdint>
 
+// All the states a field on the board can be in.
 enum class FieldValue : std::uint_least8_t {
+    // Nothing is here and this field is not adjacent to a ship
     EMPTY,
+    // A ship parts is located here
     SHIP,
+    // This ship part was already hit
     SHIP_HIT,
+    // Previous target of failed shot. Nothing is here.
     MISS,
+    // Nothing is here. Directly adjacent to a ship.
+    // (Used to prevent generation of touching ships)
     PLACEHOLDER
 };
 
+// Configuration for game board sizes
 constexpr struct {
     const size_t rows = 15;
     const size_t columns = 15;

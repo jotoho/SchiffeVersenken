@@ -3,6 +3,10 @@
 
 #include "../include/boardpoint.hpp"
 
+/*
+    Constructor for BoardPoint. It checks if the given coordinates are
+    in-bounds based on the global board size settings.
+*/
 BoardPoint::BoardPoint(const std::size_t x, const std::size_t y) : x(x), y(y) {
     if (x >= BoardDimensions.columns)
         throw std::invalid_argument{
@@ -18,10 +22,20 @@ BoardPoint::BoardPoint(const std::size_t x, const std::size_t y) : x(x), y(y) {
             ", max: " + std::to_string(BoardDimensions.rows - 1) + ')'};
 }
 
+/*
+    Attempts to add the coordinates of two points together.
+    Since BoardPoint is immutable, this creates a new BoardPoint.
+    Throws std::invalid_argument if resulting point would be out-of-bounds.
+*/
 BoardPoint BoardPoint::operator+(const BoardPoint& otherPoint) const {
     return BoardPoint{this->x + otherPoint.x, this->y + otherPoint.y};
 }
 
+/*
+    Attempts to subtract coordinates in other point from this one.
+    Throws std::range_error if this would have caused an underflow
+    or std::invalid_argument if the resulting point is out-of-bounds.
+*/
 BoardPoint BoardPoint::operator-(const BoardPoint& otherPoint) const {
     // Leaving out the braces on this if will make gcc 11.1.0 not correctly
     // connect it with the else-block
@@ -33,10 +47,20 @@ BoardPoint BoardPoint::operator-(const BoardPoint& otherPoint) const {
         return BoardPoint{this->x - otherPoint.x, this->y - otherPoint.y};
 }
 
+/*
+    Tests if two BoardPoints are identical.
+    Return true if yes, otherwise false.
+*/
 bool BoardPoint::operator==(const BoardPoint& otherPoint) const {
     return this->x == otherPoint.x && this->y == otherPoint.y;
 }
 
+/*
+    Given a start point, an end point and the direction the end point
+    is in from the perspective of the start point, this function
+    generates the corresponsing BoardPointRange between both points
+    and including both.
+*/
 BoardPointRange generatePointRangeBetween(const BoardPoint& startPoint,
                                           const BoardPoint& endPoint,
                                           const CardinalDirection direction) {
@@ -53,6 +77,10 @@ BoardPointRange generatePointRangeBetween(const BoardPoint& startPoint,
     return shipPoints;
 }
 
+/*
+    Uses arithmetic boardpoint operators to attempt generating a board point
+    a certain distance away from the given point in the specified direction.
+*/
 BoardPoint stepsFromPoint(const BoardPoint& originPoint,
                           const CardinalDirection direction,
                           const std::size_t numberOfSteps) {
@@ -70,10 +98,16 @@ BoardPoint stepsFromPoint(const BoardPoint& originPoint,
     }
 }
 
+/*
+    Looks up the FieldValue at the given point on the given board and
+    then returns a reference.
+    This is to avoid duplicate, easily breakable code.
+*/
 FieldValue& getRefFromPoint(BoardType& board, const BoardPoint& point) {
     return board[point.y][point.x];
 }
 
+// Const overload
 const FieldValue& getRefFromPoint(const BoardType& board,
                                   const BoardPoint& point) {
     return board[point.y][point.x];
