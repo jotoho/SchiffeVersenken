@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "../include/fieldinfo.hpp"
+#include "../include/gamelogic.hpp"
 
 void clearScreen() {
 #if _WIN32
@@ -42,6 +43,26 @@ void printNumbers() {
             std::cout << " | ";
     }
     printf(" |\n");
+}
+
+void printTutorial() {
+    clearScreen();
+    for (size_t lines = 0; lines <= 70; lines++)
+        std::cout << '-';
+    std::cout
+        << "\nSchiffe Versenken\n\n"
+           "Each turn you will have the chance to fire once.\n"
+           "If you hit an enemy ship you can shoot again.\n"
+           "Please enter the coordinates letter first then the number.\n\n"
+           "Ships  are displayed with #\n"
+           "Misses are displayed with ~\n"
+           "Hits   are displayed with X\n\n"
+           "The bugtracker and sourcecode can be found here:\n"
+           "https://github.com/jotoho/SchiffeVersenken\n\n";
+    for (size_t lines = 0; lines <= 70; lines++)
+        std::cout << '-';
+    std::cout << '\n';
+    waitForEnter();
 }
 
 void printGameBoard(const BoardType& board,

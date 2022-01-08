@@ -4,8 +4,12 @@
 
 #include "../include/board-generator.hpp"
 #include "../include/gamelogic.hpp"
+#include "../include/output.hpp"
 
 int main() {
+    // Give basic instructions to player
+    printTutorial();
+
     // Initialize RNG
     std::srand(std::time(nullptr));
 

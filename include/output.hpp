@@ -20,6 +20,7 @@ const OutputTranslationTable transparentTranslationTable();
 void clearScreen();
 void printLine();
 void printNumbers();
+void printTutorial();
 void printGameBoard(const BoardType& board,
                     const OutputTranslationTable translationTable,
                     const char defaultChar = ' ');
