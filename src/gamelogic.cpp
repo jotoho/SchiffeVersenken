@@ -133,7 +133,8 @@ void waitForEnter() {
 
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
     if (hasLost(playerBoard) && hasLost(computerBoard))
-        throw std::logic_error{"FATAL:"};
+        throw std::logic_error{
+            "FATAL: No ships were generated!\n"};
     // Loop until a winner is determined and returned
     while (true) {
         bool playerHitOnce = false;
