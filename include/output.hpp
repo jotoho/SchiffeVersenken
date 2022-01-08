@@ -1,6 +1,7 @@
 #ifndef INCLUDE_GUARD_OUTPUT_HPP
 #define INCLUDE_GUARD_OUTPUT_HPP
 
+#include <iostream>
 #include <unordered_map>
 #include "./fieldinfo.hpp"
 
@@ -21,6 +22,15 @@ const OutputTranslationTable defaultTranslationTable();
 // plus all ship parts
 const OutputTranslationTable transparentTranslationTable();
 
+// Gets the version from global-config.hpp and prints it to console
+void writeProgramInfo(std::ostream& out = std::cout);
+// Stops the game and waits for player input
+void waitForReturn();
+// After every move this function is called to refresh the Board
+void refreshBoard(const BoardType& board,
+                  const char* const boardDiscription,
+                  OutputTranslationTable translationTable);
+// Clears the screen
 void clearScreen();
 // Prints horizontal separator of correct length
 void printLine();

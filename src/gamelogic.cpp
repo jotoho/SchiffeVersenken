@@ -11,26 +11,6 @@
 #include "../include/output.hpp"
 
 /*
-    Outputs basic program name and version to screen
-*/
-void writeProgramInfo(std::ostream& out) {
-    out << "SchiffeVersenken " << GlobalConf.version << '\n' << std::endl;
-}
-
-/*
-    Used to update the board on screen
-*/
-void refreshBoard(const BoardType& board,
-                  const char* const boardDiscription,
-                  OutputTranslationTable translationTable) {
-    clearScreen();
-    writeProgramInfo(std::cout);
-    std::cout << boardDiscription << '\n';
-    printGameBoard(board, translationTable);
-    std::cout << '\n';
-}
-
-/*
     Scans if any ship parts on the given game board are still intact
 */
 static bool hasLost(const BoardType& board) {
@@ -154,27 +134,6 @@ bool doComputerTurn(BoardType& playerBoard) {
     const auto result = aiShotRandom(playerBoard);
     refreshBoard(playerBoard, "Your ships:", transparentTranslationTable());
     return result;
-}
-
-/*
-    Wait for the player to confirm by pressing Return (LF).
-
-    All other inputs until then are ignored.
-*/
-void waitForReturn() {
-    // Emit notice to stdout
-    std::puts("Press Return key to continue...");
-    std::fflush(stdout);
-
-    while (true) {
-        switch (std::getchar()) {
-            case '\n':
-            case EOF:
-                return;
-            default:
-                continue;
-        }
-    }
 }
 
 /*
