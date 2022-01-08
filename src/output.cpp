@@ -62,7 +62,7 @@ void printTutorial() {
     for (size_t lines = 0; lines <= 70; lines++)
         std::cout << '-';
     std::cout << '\n';
-    waitForEnter();
+    waitForReturn();
 }
 
 void printGameBoard(const BoardType& board,

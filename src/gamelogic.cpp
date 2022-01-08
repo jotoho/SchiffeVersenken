@@ -110,6 +110,9 @@ bool doPlayerTurn(BoardType& computerBoard) {
         std::cout << "Where do you want to shoot? ";
         std::string userInput = getLineFromUser();
 
+        if (userInput.empty())
+            continue;
+
         try {
             auto& target =
                 getRefFromPoint(computerBoard, inputTranslator(userInput));
