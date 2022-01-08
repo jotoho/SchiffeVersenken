@@ -10,11 +10,16 @@
 #include "../include/input.hpp"
 #include "../include/output.hpp"
 
+/*
+    Outputs basic program name and version to screen
+*/
 void writeProgramInfo(std::ostream& out) {
-    out << "SchiffeVersenken version " << GlobalConf.version << '\n'
-        << std::endl;
+    out << "SchiffeVersenken " << GlobalConf.version << '\n' << std::endl;
 }
 
+/*
+    Used to update the board on screen
+*/
 void refreshBoard(const BoardType& board,
                   const char* const boardDiscription,
                   OutputTranslationTable translationTable) {
@@ -25,6 +30,9 @@ void refreshBoard(const BoardType& board,
     std::cout << '\n';
 }
 
+/*
+    Scans if any ship parts on the given game board are still intact
+*/
 static bool hasLost(const BoardType& board) {
     for (const auto& segment : board)
         if (std::find(segment.begin(), segment.end(), FieldValue::SHIP) !=
@@ -36,6 +44,14 @@ static bool hasLost(const BoardType& board) {
     return true;
 }
 
+/*
+    Function was reused from @jotoho's weekly exercise code
+
+    Gets a line of text from STDIN and checks for things like EOF or other
+    errors.
+
+    Only used here, so we marked it static
+*/
 static std::string getLineFromUser() {
     std::string input;
     while (true) {
@@ -55,6 +71,12 @@ static std::string getLineFromUser() {
     return input;
 }
 
+/*
+    Determines the winner, if any, using the hasLost function.
+
+    Return value is 0, when no one has won. Otherwise, the player's numerical
+   id.
+*/
 WinnerID checkWinner(const BoardType& boardPlayer1,
                      const BoardType& boardPlayer2) {
     const bool player1Lost = hasLost(boardPlayer1);
@@ -72,9 +94,17 @@ WinnerID checkWinner(const BoardType& boardPlayer1,
         return 0;
 }
 
+/*
+    Do everything needed for the player to take one shot.
+
+    Parameter is the board of the opponent.
+
+    Return value if false, if the shot was a miss.
+    Otherwise, it is true.
+*/
 bool doPlayerTurn(BoardType& computerBoard) {
-    refreshBoard(computerBoard, "Your enemies ships",
-                 defaultTranslationTable());
+    refreshBoard(computerBoard,
+                 "Your enemies ships:", defaultTranslationTable());
     // Repeat input until a valid pair of coordinates was entered
     while (true) {
         std::cout << "Where do you want to shoot? ";
@@ -109,15 +139,28 @@ bool doPlayerTurn(BoardType& computerBoard) {
     }
 }
 
+/*
+    Do everything needed for the computer to shoot in this turn
+    (This code will shoot multiple times when the previous shots
+    in this turn were successful.)
+
+    Return value: true if the enemy was shot at least once.
+                  false if the first shot already missed.
+*/
 bool doComputerTurn(BoardType& playerBoard) {
     const auto result = aiShotRandom(playerBoard);
     refreshBoard(playerBoard, "Your ships:", transparentTranslationTable());
     return result;
 }
 
-void waitForEnter() {
+/*
+    Wait for the player to confirm by pressing Return (LF).
+
+    All other inputs until then are ignored.
+*/
+void waitForReturn() {
     // Emit notice to stdout
-    std::puts("Press Enter to continue...");
+    std::puts("Press Return key to continue...");
     std::fflush(stdout);
 
     while (true) {
@@ -131,14 +174,26 @@ void waitForEnter() {
     }
 }
 
+/*
+    The actual game logic.
+
+    This function gets the board of both players and loops through the different
+   turns until one of the players wins.
+
+    Then it returns the winner's ID to the calling function for announcement.
+
+    If the game ever reaches an unrecoverable state, the application may be
+   terminated.
+*/
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
     if (hasLost(playerBoard) && hasLost(computerBoard))
         throw std::logic_error{"FATAL: No ships were generated!\n"};
+
     // Loop until a winner is determined and returned
     while (true) {
         while (doPlayerTurn(computerBoard)) {
-            refreshBoard(computerBoard, "Your enemies ships",
-                         defaultTranslationTable());
+            refreshBoard(computerBoard,
+                         "Your enemies ships:", defaultTranslationTable());
             std::cout << "Hit!\n";
 
             // If a hit occured, we need to check if that ends the game
@@ -148,11 +203,11 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 return potentialWinnerID;
         }
 
-        refreshBoard(computerBoard, "Your enemies ships",
-                     defaultTranslationTable());
+        refreshBoard(computerBoard,
+                     "Your enemies ships:", defaultTranslationTable());
         std::cout << "Miss.\n";
 
-        waitForEnter();
+        waitForReturn();
 
         if (doComputerTurn(playerBoard)) {
             std::cout << "You were hit!\n";
@@ -164,6 +219,7 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 return potentialWinnerID;
         } else
             std::cout << "The enemy missed.\n";
-        waitForEnter();
+
+        waitForReturn();
     }
 }

@@ -20,13 +20,19 @@ struct BoardPoint {
     bool operator==(const BoardPoint& otherPoint) const;
 };
 
+// Collection of BoardPoints in a line (horizontal or vertical)
 using BoardPointRange = std::vector<BoardPoint>;
+// Helper enum for handling direction. North is defined as up on screen.
 enum class CardinalDirection : std::uint_least8_t { NORTH, EAST, SOUTH, WEST };
 
+// Generates BoardPointRange for area between given points.
+// Direction is that from startPoint to endPoint
 BoardPointRange generatePointRangeBetween(const BoardPoint& startPoint,
                                           const BoardPoint& endPoint,
                                           const CardinalDirection direction);
 
+// Attempts to return BoardPoint a certain distance away from origin
+// in the given direction
 BoardPoint stepsFromPoint(const BoardPoint& originPoint,
                           const CardinalDirection direction,
                           const std::size_t numberOfSteps);

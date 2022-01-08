@@ -3,6 +3,9 @@
 #include "../include/boardpoint.hpp"
 #include "../include/global-config.hpp"
 
+// Gets the input from the user and attempts to parse
+// the row and column coordinates in the format:
+// "{upper-case letter representing row}{unsigned number representing column}"
 BoardPoint inputTranslator(const std::string input) {
     const std::size_t rowCoordinate = input[0] - 'A';
     const std::string numberString = input.substr(1);

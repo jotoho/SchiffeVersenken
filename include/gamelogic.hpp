@@ -13,7 +13,7 @@ std::uint_least8_t checkWinner(const BoardType& boardPlayer1,
 void writeProgramInfo(std::ostream& out = std::cout);
 bool doPlayerTurn(BoardType& computerBoard);
 bool doComputerTurn(BoardType& playerBoard);
-void waitForEnter();
+void waitForReturn();
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard);
 
 #endif  // INCLUDE_GUARD_GAMELOGIC_HPP

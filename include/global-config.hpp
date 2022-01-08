@@ -4,7 +4,7 @@
 #include <string_view>
 
 constexpr struct {
-    const std::string_view version = "PRE-ALPHA";
+    const std::string_view version = "ALPHA";
     const bool debugMode = false;
 } GlobalConf;
 

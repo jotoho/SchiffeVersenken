@@ -4,6 +4,11 @@
 #include <stdexcept>
 #include "../include/boardpoint.hpp"
 
+/*
+    Shoots at adjacent field of the last hit location.
+    Calls itself on success to continue attempts at hitting the ships,
+    otherwise ends after one miss.
+*/
 void hitShip(BoardType& board, const BoardPoint& lastShot) {
     bool error;
     do {
@@ -36,6 +41,11 @@ void hitShip(BoardType& board, const BoardPoint& lastShot) {
     } while (error);
 }
 
+/*
+    Randomly shoots at the board and then calls hitShip for successive
+    shots if first one hit.
+    Return true if first shot hit, otherwise false.
+*/
 bool aiShotRandom(BoardType& board) {
     const BoardPoint target{std::rand() % BoardDimensions.columns,
                             std::rand() % BoardDimensions.rows};

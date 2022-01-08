@@ -4,6 +4,10 @@
 #include <vector>
 #include "../include/boardpoint.hpp"
 
+/*
+    Generates and returns a basic empty game board with all fields
+    set to empty.
+*/
 constexpr BoardType generateGameBoardEmpty() {
     BoardType board{};
     for (auto& row : board)
@@ -26,6 +30,10 @@ static std::uint_fast64_t genRandom64bitVal() {
     return (genRandom32bitVal() << 32) | genRandom32bitVal();
 }
 
+/*
+    This function attempts to set an adjacent field to PLACEHOLDER
+    but will simply return without doing anything, if it encounters an error.
+*/
 static void attemptPlacingPlaceholder(BoardType& board,
                                       const BoardPoint& center,
                                       const CardinalDirection direction) {
@@ -38,6 +46,13 @@ static void attemptPlacingPlaceholder(BoardType& board,
     }
 }
 
+/*
+    Checks if the points included in a BoardPointRange are all EMPTY
+    on the given board.
+    For the purposes of this method placeholders do not count as empty.
+
+    Return value: true if all are EMPTY, otherwise false
+*/
 static bool isThisAreaOnBoardEmpty(const BoardType& board,
                                    const BoardPointRange& points) {
     for (const auto& point : points)
@@ -46,6 +61,13 @@ static bool isThisAreaOnBoardEmpty(const BoardType& board,
     return true;
 }
 
+/*
+    Writes a ship into the BoardPointRange given on the board
+    and attempts to fill in the PLACEHOLDERs around it.
+
+    This function assumes that all given points are empty on
+    this board.
+*/
 static void writeShipToBoard(BoardType& board,
                              const BoardPointRange& shipPoints) {
     for (const auto& point : shipPoints) {
@@ -59,17 +81,31 @@ static void writeShipToBoard(BoardType& board,
     }
 }
 
+/*
+    Selects a random valid BoardPoint and returns it.
+*/
 static BoardPoint chooseRandomBoardPoint() {
     return {
         static_cast<std::size_t>(genRandom64bitVal()) % BoardDimensions.columns,
         static_cast<std::size_t>(genRandom64bitVal()) % BoardDimensions.rows};
 }
 
+/*
+    Specialized exception type for when lots of attempts to
+    place ships have failed and we assume that not enough space
+    remains to completely populate the board.
+*/
 struct InsufficientBoardSpaceError : std::runtime_error {
     InsufficientBoardSpaceError(const std::string msg)
         : std::runtime_error(msg) {}
 };
 
+/*
+    Attempts to place a ship with the given size anywhere on the board.
+
+    If the function believes that this is impossible it can throw
+    InsufficientBoardSpaceError.
+*/
 static void randomlyPlaceShip(BoardType& board, const std::size_t shipLength) {
     // This will repeat until the placement was successful
     constexpr std::uint_fast32_t maxAttempts = 1000;
@@ -112,6 +148,13 @@ static void randomlyPlaceShip(BoardType& board, const std::size_t shipLength) {
              std::to_string(maxAttempts) + " times)")};
 }
 
+/*
+    This function requests all the required ships to be randomly placed
+    on the board.
+
+    Returns the board if successful. Throws an InsufficientBoardSpaceError
+    exception otherwise.
+*/
 static BoardType attemptGeneratingRandomBoard() {
     auto board = generateGameBoardEmpty();
     for (std::size_t shipLength = 2; shipLength < ShipDistribution.size();
@@ -126,6 +169,14 @@ static BoardType attemptGeneratingRandomBoard() {
     return board;
 }
 
+/*
+    Tries to randomly generate a game board with all required ships.
+
+    Return value is the board.
+
+    May throw InsufficientBoardSpaceError if it believes there are
+    too many or too large ships for the provided board space.
+*/
 BoardType generateGameBoardRandom() {
     constexpr std::uint_least8_t maxFailures = 100;
     std::uint_least8_t failedAttempts = 0;
