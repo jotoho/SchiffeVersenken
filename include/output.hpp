@@ -4,21 +4,24 @@
 #include <unordered_map>
 #include "./fieldinfo.hpp"
 
+struct BoardFieldFormat {
+    const char symbol;
+    const char* const colorCode;
+    BoardFieldFormat(const char, const char* const);
+};
+
 using OutputTranslationTable =
-    const std::unordered_map<const FieldValue, const char>&;
+    const std::unordered_map<const FieldValue, const BoardFieldFormat>&;
 
-const std::unordered_map<const FieldValue, const char>&
-defaultTranslationTable();
+const OutputTranslationTable defaultTranslationTable();
 
-const std::unordered_map<const FieldValue, const char>&
-transparentTranslationTable();
+const OutputTranslationTable transparentTranslationTable();
 
 void clearScreen();
 void printLine();
 void printNumbers();
-void printGameBoard(
-    const BoardType& board,
-    const std::unordered_map<const FieldValue, const char>& translationTable,
-    const char defaultChar = ' ');
+void printGameBoard(const BoardType& board,
+                    const OutputTranslationTable translationTable,
+                    const char defaultChar = ' ');
 
 #endif  // INCLUDE_GUARD_OUTPUT_HPP

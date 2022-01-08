@@ -44,10 +44,9 @@ void printNumbers() {
     printf(" |\n");
 }
 
-void printGameBoard(
-    const BoardType& board,
-    const std::unordered_map<const FieldValue, const char>& translationTable,
-    const char defaultChar) {
+void printGameBoard(const BoardType& board,
+                    const OutputTranslationTable translationTable,
+                    const char defaultChar) {
     const std::size_t paddingLength =
         (static_cast<std::size_t>(std::log10(BoardDimensions.columns)) + 3U) /
         2U;
@@ -67,9 +66,11 @@ void printGameBoard(
             const auto fieldValue = board[lineIndex][columnIndex];
             std::cout << paddingStr;
             try {
-                std::cout << translationTable.at(fieldValue);
+                const auto& formatData = translationTable.at(fieldValue);
+                std::cout << formatData.colorCode << formatData.symbol
+                          << "\033[0m";
             } catch (const std::out_of_range& e) {
-                std::cout << defaultChar;
+                std::cout << defaultChar << "\033[0m";
             }
             std::cout << paddingStr << '|';
         }
@@ -79,16 +80,23 @@ void printGameBoard(
     printNumbers();
 }
 
+BoardFieldFormat::BoardFieldFormat(const char symbol,
+                                   const char* const colorCode)
+    : symbol(symbol), colorCode(colorCode) {}
+
 OutputTranslationTable transparentTranslationTable() {
-    static const std::unordered_map<const FieldValue, const char>
-        translationTable{{FieldValue::SHIP_HIT, 'X'},
-                         {FieldValue::SHIP, '#'},
-                         {FieldValue::MISS, '~'}};
+    static const std::unordered_map<const FieldValue, const BoardFieldFormat>
+        translationTable{
+            {FieldValue::SHIP_HIT, BoardFieldFormat{'X', "\033[1;31m"}},
+            {FieldValue::SHIP, BoardFieldFormat{'#', "\033[1;32m"}},
+            {FieldValue::MISS, BoardFieldFormat{'~', "\033[1;34m"}}};
     return translationTable;
 }
 
 OutputTranslationTable defaultTranslationTable() {
-    static const std::unordered_map<const FieldValue, const char>
-        translationTable{{FieldValue::SHIP_HIT, 'X'}, {FieldValue::MISS, '~'}};
+    static const std::unordered_map<const FieldValue, const BoardFieldFormat>
+        translationTable{
+            {FieldValue::SHIP_HIT, BoardFieldFormat{'X', "\033[1;31m"}},
+            {FieldValue::MISS, BoardFieldFormat{'~', "\033[1;34m"}}};
     return translationTable;
 }

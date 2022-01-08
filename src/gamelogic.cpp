@@ -136,12 +136,10 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
         throw std::logic_error{"FATAL: No ships were generated!\n"};
     // Loop until a winner is determined and returned
     while (true) {
-        bool playerHitOnce = false;
         while (doPlayerTurn(computerBoard)) {
             refreshBoard(computerBoard, "Your enemies ships",
                          defaultTranslationTable());
             std::cout << "Hit!\n";
-            playerHitOnce = true;
 
             // If a hit occured, we need to check if that ends the game
             const auto potentialWinnerID =
@@ -150,11 +148,10 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 return potentialWinnerID;
         }
 
-        if (!playerHitOnce) {
-            refreshBoard(computerBoard, "Your enemies ships",
-                         defaultTranslationTable());
-            std::cout << "Miss.\n";
-        }
+        refreshBoard(computerBoard, "Your enemies ships",
+                     defaultTranslationTable());
+        std::cout << "Miss.\n";
+
         waitForEnter();
 
         if (doComputerTurn(playerBoard)) {
