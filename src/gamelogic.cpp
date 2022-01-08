@@ -36,13 +36,33 @@ static bool hasLost(const BoardType& board) {
     return true;
 }
 
+static std::string getLineFromUser() {
+    std::string input;
+    while (true) {
+        if (std::cin.eof()) {
+            std::cerr << "\nSTDIN has been closed and the game cannot continue!"
+                      << std::endl;
+            std::exit(EXIT_SUCCESS);
+        } else if (std::cin.good()) {
+            std::getline(std::cin, input);
+            if (!std::cin.fail())
+                break;
+        } else {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    return input;
+}
+
 WinnerID checkWinner(const BoardType& boardPlayer1,
                      const BoardType& boardPlayer2) {
     const bool player1Lost = hasLost(boardPlayer1);
     const bool player2Lost = hasLost(boardPlayer2);
 
     if (player1Lost && player2Lost) {
-        std::cerr << "Somehow, both players lost simultaneously\n";
+        std::cerr << "Somehow, both players lost simultaneously\n"
+                     "Please report this to the developers!\n";
         std::exit(EXIT_FAILURE);
     } else if (player1Lost)
         return 1;
@@ -58,28 +78,33 @@ bool doPlayerTurn(BoardType& computerBoard) {
     // Repeat input until a valid pair of coordinates was entered
     while (true) {
         std::cout << "Where do you want to shoot? ";
-        std::string userInput{};
-        std::getline(std::cin, userInput);
-        auto& target =
-            getRefFromPoint(computerBoard, inputTranslator(userInput));
+        std::string userInput = getLineFromUser();
 
-        switch (target) {
-            case FieldValue::MISS:
-                [[fallthrough]];
-            case FieldValue::SHIP_HIT:
-                std::cout << "You already shot there once!\n";
-                continue;
-            case FieldValue::EMPTY:
-                [[fallthrough]];
-            case FieldValue::PLACEHOLDER:
-                target = FieldValue::MISS;
-                return false;
-            case FieldValue::SHIP:
-                target = FieldValue::SHIP_HIT;
-                return true;
-            default:
-                std::cerr << "Invalid state of field on board. Terminating!\n";
-                std::exit(EXIT_FAILURE);
+        try {
+            auto& target =
+                getRefFromPoint(computerBoard, inputTranslator(userInput));
+
+            switch (target) {
+                case FieldValue::MISS:
+                    [[fallthrough]];
+                case FieldValue::SHIP_HIT:
+                    std::cout << "You already shot there once!\n";
+                    continue;
+                case FieldValue::EMPTY:
+                    [[fallthrough]];
+                case FieldValue::PLACEHOLDER:
+                    target = FieldValue::MISS;
+                    return false;
+                case FieldValue::SHIP:
+                    target = FieldValue::SHIP_HIT;
+                    return true;
+                default:
+                    std::cerr
+                        << "Invalid state of field on board. Terminating!\n";
+                    std::exit(EXIT_FAILURE);
+            }
+        } catch (const std::invalid_argument& unused) {
+            std::cout << "Please enter valid coordinates!\n";
         }
     }
 }
@@ -107,6 +132,8 @@ void waitForEnter() {
 }
 
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
+    if (hasLost(playerBoard) && hasLost(computerBoard))
+        throw std::logic_error{"FATAL: No ships were generated!\n"};
     // Loop until a winner is determined and returned
     while (true) {
         bool playerHitOnce = false;
@@ -138,9 +165,8 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 checkWinner(playerBoard, computerBoard);
             if (potentialWinnerID)
                 return potentialWinnerID;
-        } else {
+        } else
             std::cout << "The enemy missed.\n";
-        }
         waitForEnter();
     }
 }
