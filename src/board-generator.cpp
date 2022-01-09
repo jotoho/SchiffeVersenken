@@ -8,7 +8,7 @@
     Generates and returns a basic empty game board with all fields
     set to empty.
 */
-constexpr BoardType generateGameBoardEmpty() {
+BoardType generateGameBoardEmpty() {
     BoardType board{};
     for (auto& row : board)
         std::fill(row.begin(), row.end(), FieldValue::EMPTY);
