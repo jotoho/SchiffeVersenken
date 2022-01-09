@@ -15,19 +15,24 @@ void clearScreen() {
     [[maybe_unused]] const auto test = system("clear");
 #endif
 }
+
+/*
+    Counts ships on board
+*/
+std::size_t shipCount(const BoardType& board) {
+    std::size_t ships = 0;
+    for (const auto& segment : board)
+        ships += std::count(segment.begin(), segment.end(), FieldValue::SHIP);
+    return ships;
+}
 /*
     Used to count the ships on both boards and displays them on the screen
 */
 void healthBar(const BoardType& playerBoard, const BoardType& computerBoard) {
-    size_t playerHealth = 0, computerHealth = 0;
-    for (const auto& segment : playerBoard)
-        playerHealth +=
-            std::count(segment.begin(), segment.end(), FieldValue::SHIP);
+    std::size_t playerHealth = 0, computerHealth = 0;
 
-    for (const auto& segment : computerBoard)
-        computerHealth +=
-            std::count(segment.begin(), segment.end(), FieldValue::SHIP);
-
+    playerHealth = shipCount(playerBoard);
+    computerHealth = shipCount(computerBoard);
     std::cout << std::setfill(' ') << std::setw(3) << "(Player 1) Computer "
               << computerHealth << ':' << playerHealth
               << " Human (Player 2)\n\n";
@@ -69,7 +74,8 @@ void refreshBoard(const BoardType& playerBoard,
                   const char* const boardDiscription,
                   OutputTranslationTable translationTable) {
     if (&currentBoard != &playerBoard || &currentBoard != &computerBoard) {
-        throw std::invalid_argument{"Boards are out of sync."};
+        throw std::invalid_argument{
+            "Reference to wrong board was passed to refreshBoard"};
     }
     clearScreen();
     writeProgramInfo(std::cout);

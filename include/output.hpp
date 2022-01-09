@@ -34,6 +34,8 @@ void refreshBoard(const BoardType& playerBoard,
                   OutputTranslationTable translationTable);
 // Clears the screen
 void clearScreen();
+// Counts ships on board
+std::size_t shipCount(const BoardType& board);
 // Prints amount of ships from each player
 void healthBar(const BoardType& playerBoard, const BoardType& computerBoard);
 // Prints horizontal separator of correct length
