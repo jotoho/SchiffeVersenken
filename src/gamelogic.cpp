@@ -82,8 +82,8 @@ WinnerID checkWinner(const BoardType& boardPlayer1,
     Return value if false, if the shot was a miss.
     Otherwise, it is true.
 */
-bool doPlayerTurn(BoardType& computerBoard) {
-    refreshBoard(computerBoard,
+bool doPlayerTurn(BoardType& computerBoard, BoardType& playerBoard) {
+    refreshBoard(playerBoard, computerBoard, computerBoard,
                  "Your enemies ships:", defaultTranslationTable());
     // Repeat input until a valid pair of coordinates was entered
     while (true) {
@@ -130,9 +130,10 @@ bool doPlayerTurn(BoardType& computerBoard) {
     Return value: true if the enemy was shot at least once.
                   false if the first shot already missed.
 */
-bool doComputerTurn(BoardType& playerBoard) {
+bool doComputerTurn(BoardType& playerBoard, BoardType& computerBoard) {
     const auto result = aiShotRandom(playerBoard);
-    refreshBoard(playerBoard, "Your ships:", transparentTranslationTable());
+    refreshBoard(playerBoard, computerBoard, playerBoard,
+                 "Your ships:", transparentTranslationTable());
     return result;
 }
 
@@ -153,8 +154,8 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
 
     // Loop until a winner is determined and returned
     while (true) {
-        while (doPlayerTurn(computerBoard)) {
-            refreshBoard(computerBoard,
+        while (doPlayerTurn(computerBoard, playerBoard)) {
+            refreshBoard(playerBoard, computerBoard, computerBoard,
                          "Your enemies ships:", defaultTranslationTable());
             std::cout << "Hit!\n";
 
@@ -165,13 +166,13 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
                 return potentialWinnerID;
         }
 
-        refreshBoard(computerBoard,
+        refreshBoard(playerBoard, computerBoard, computerBoard,
                      "Your enemies ships:", defaultTranslationTable());
         std::cout << "Miss.\n";
 
         waitForReturn();
 
-        if (doComputerTurn(playerBoard)) {
+        if (doComputerTurn(playerBoard, computerBoard)) {
             std::cout << "You were hit!\n";
 
             // If a hit occured, we need to check if that ends the game

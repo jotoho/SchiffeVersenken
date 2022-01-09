@@ -1,4 +1,5 @@
 #include "../include/output.hpp"
+#include <algorithm>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -14,7 +15,23 @@ void clearScreen() {
     [[maybe_unused]] const auto test = system("clear");
 #endif
 }
+/*
+    Used to count the ships on both boards and displays them on the screen
+*/
+void healthBar(const BoardType& playerBoard, const BoardType& computerBoard) {
+    size_t playerHealth = 0, computerHealth = 0;
+    for (const auto& segment : playerBoard)
+        playerHealth +=
+            std::count(segment.begin(), segment.end(), FieldValue::SHIP);
 
+    for (const auto& segment : computerBoard)
+        computerHealth +=
+            std::count(segment.begin(), segment.end(), FieldValue::SHIP);
+
+    std::cout << std::setfill(' ') << std::setw(3) << "(Player 1) Computer "
+              << computerHealth << ':' << playerHealth
+              << " Human (Player 2)\n\n";
+}
 /*
     Wait for the player to confirm by pressing Return (LF).
 
@@ -46,13 +63,19 @@ void writeProgramInfo(std::ostream& out) {
 /*
     Used to update the board on screen
 */
-void refreshBoard(const BoardType& board,
+void refreshBoard(const BoardType& playerBoard,
+                  const BoardType& computerBoard,
+                  const BoardType& currentBoard,
                   const char* const boardDiscription,
                   OutputTranslationTable translationTable) {
+    if (&currentBoard != &playerBoard || &currentBoard != &computerBoard) {
+        throw std::invalid_argument{"Boards are out of sync."};
+    }
     clearScreen();
     writeProgramInfo(std::cout);
+    healthBar(playerBoard, computerBoard);
     std::cout << boardDiscription << '\n';
-    printGameBoard(board, translationTable);
+    printGameBoard(currentBoard, translationTable);
     std::cout << '\n';
 }
 

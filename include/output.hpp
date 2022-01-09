@@ -27,11 +27,15 @@ void writeProgramInfo(std::ostream& out = std::cout);
 // Stops the game and waits for player input
 void waitForReturn();
 // After every move this function is called to refresh the Board
-void refreshBoard(const BoardType& board,
+void refreshBoard(const BoardType& playerBoard,
+                  const BoardType& computerBoard,
+                  const BoardType& currentBoard,
                   const char* const boardDiscription,
                   OutputTranslationTable translationTable);
 // Clears the screen
 void clearScreen();
+// Prints amount of ships from each player
+void healthBar(const BoardType& playerBoard, const BoardType& computerBoard);
 // Prints horizontal separator of correct length
 void printLine();
 // Prints column labels and separators between them
