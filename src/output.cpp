@@ -29,12 +29,10 @@ std::size_t shipCount(const BoardType& board) {
     Used to count the ships on both boards and displays them on the screen
 */
 void healthBar(const BoardType& playerBoard, const BoardType& computerBoard) {
-    std::size_t playerHealth = 0, computerHealth = 0;
-
-    playerHealth = shipCount(playerBoard);
-    computerHealth = shipCount(computerBoard);
+    std::size_t playerHealth = shipCount(playerBoard);
+    std::size_t computerHealth = shipCount(computerBoard);
     std::cout << std::setfill(' ') << std::setw(3) << "(Player 1) Computer "
-              << computerHealth << ':' << playerHealth
+              << computerHealth << " : " << playerHealth
               << " Human (Player 2)\n\n";
 }
 /*
