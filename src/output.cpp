@@ -73,7 +73,7 @@ void refreshBoard(const BoardType& playerBoard,
                   const BoardType& currentBoard,
                   const char* const boardDiscription,
                   OutputTranslationTable translationTable) {
-    if (&currentBoard != &playerBoard || &currentBoard != &computerBoard) {
+    if (&currentBoard != &playerBoard && &currentBoard != &computerBoard) {
         throw std::invalid_argument{
             "Reference to wrong board was passed to refreshBoard"};
     }
