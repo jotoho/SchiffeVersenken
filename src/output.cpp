@@ -1,4 +1,5 @@
 #include "../include/output.hpp"
+#include <algorithm>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -15,6 +16,25 @@ void clearScreen() {
 #endif
 }
 
+/*
+    Counts ships on board
+*/
+std::size_t shipCount(const BoardType& board) {
+    std::size_t ships = 0;
+    for (const auto& segment : board)
+        ships += std::count(segment.begin(), segment.end(), FieldValue::SHIP);
+    return ships;
+}
+/*
+    Used to count the ships on both boards and displays them on the screen
+*/
+void healthBar(const BoardType& playerBoard, const BoardType& computerBoard) {
+    const std::size_t playerHealth = shipCount(playerBoard);
+    const std::size_t computerHealth = shipCount(computerBoard);
+    std::cout << std::setfill(' ') << std::setw(3) << "(Player 1) Computer "
+              << computerHealth << " : " << playerHealth
+              << " Human (Player 2)\n\n";
+}
 /*
     Wait for the player to confirm by pressing Return (LF).
 
@@ -46,13 +66,20 @@ void writeProgramInfo(std::ostream& out) {
 /*
     Used to update the board on screen
 */
-void refreshBoard(const BoardType& board,
+void refreshBoard(const BoardType& playerBoard,
+                  const BoardType& computerBoard,
+                  const BoardType& currentBoard,
                   const char* const boardDiscription,
                   OutputTranslationTable translationTable) {
+    if (&currentBoard != &playerBoard && &currentBoard != &computerBoard) {
+        throw std::invalid_argument{
+            "Reference to wrong board was passed to refreshBoard"};
+    }
     clearScreen();
     writeProgramInfo(std::cout);
+    healthBar(playerBoard, computerBoard);
     std::cout << boardDiscription << '\n';
-    printGameBoard(board, translationTable);
+    printGameBoard(currentBoard, translationTable);
     std::cout << '\n';
 }
 
