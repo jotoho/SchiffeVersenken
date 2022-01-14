@@ -158,14 +158,10 @@ static void randomlyPlaceShip(BoardType& board, const std::size_t shipLength) {
 static BoardType attemptGeneratingRandomBoard() {
     auto board = generateGameBoardEmpty();
     for (std::size_t shipLength = 2; shipLength < ShipDistribution.size();
-         shipLength++) {
-        if (ShipDistribution[shipLength] == 0)
-            continue;
-
+         shipLength++)
         for (std::uint_fast8_t shipsPlaced = 0;
              shipsPlaced < ShipDistribution[shipLength]; shipsPlaced++)
             randomlyPlaceShip(board, shipLength);
-    }
     return board;
 }
 
