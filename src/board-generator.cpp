@@ -17,10 +17,10 @@ BoardType generateGameBoardEmpty() {
 
 // file-internal function for generating random value of 32-bit length
 static std::uint_fast32_t genRandom32bitVal() {
-    // rand() alone doesn't give enough guarantees regarding the size of
+    // std::rand() alone doesn't give enough guarantees regarding the size of
     // RAND_MAX for my purposes
     static auto randomNumberGenerator =
-        std::minstd_rand{static_cast<unsigned int>(rand())};
+        std::minstd_rand{static_cast<unsigned int>(std::rand())};
     return randomNumberGenerator();
 }
 
@@ -116,7 +116,7 @@ static void randomlyPlaceShip(BoardType& board, const std::size_t shipLength) {
          placementAttempt++) {
         const BoardPoint selectedPoint = chooseRandomBoardPoint();
         const CardinalDirection direction =
-            static_cast<CardinalDirection>(rand() % 4);
+            static_cast<CardinalDirection>(std::rand() % 4);
 
         try {
             const BoardPoint endPoint =
