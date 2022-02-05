@@ -75,7 +75,7 @@ The coordinates must be entered according to the following format:
 
 ```
 SchiffeVersenken - An implementation of Battleships
-Copyright (C) 2021 SchiffeVersenken contributors
+Copyright (C) 2022 SchiffeVersenken contributors
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
