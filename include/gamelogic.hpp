@@ -31,5 +31,6 @@ std::uint_least8_t checkWinner(const BoardType& boardPlayer1,
 bool doPlayerTurn(BoardType& computerBoard, BoardType& playerBoard);
 bool doComputerTurn(BoardType& playerBoard, BoardType& computerBoard);
 WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard);
+WinnerID playGame(BoardType&& playerBoard, BoardType&& computerBoard);
 
 #endif  // INCLUDE_GUARD_GAMELOGIC_HPP

@@ -204,3 +204,7 @@ WinnerID playGame(BoardType& playerBoard, BoardType& computerBoard) {
         waitForReturn();
     }
 }
+
+WinnerID playGame(BoardType&& playerBoard, BoardType&& computerBoard) {
+    return playGame(playerBoard, computerBoard);
+}
