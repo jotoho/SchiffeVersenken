@@ -1,5 +1,6 @@
+VERSION=\"$(shell git describe --tags --always --dirty)\"
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native -fdata-sections -ffunction-sections -O2
+CXXFLAGS := -std=c++17 -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native -fdata-sections -ffunction-sections -O2 -DSCHIFFEVERSENKEN_VERSION=$(VERSION)
 LDFLAGS := -Wl,--gc-sections
 
 schiffeversenken: $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))

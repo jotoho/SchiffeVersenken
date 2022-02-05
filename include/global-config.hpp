@@ -22,7 +22,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <string_view>
 
 constexpr struct {
-    const std::string_view version = "v1.0.0";
+#ifdef SCHIFFEVERSENKEN_VERSION
+    const std::string_view version = "v" SCHIFFEVERSENKEN_VERSION;
+#else
+    const std::string_view version = "(version unknown)";
+#endif  // SCHIFFEVERSENKEN_VERSION
+
     const bool debugMode = false;
 } GlobalConf;
 
