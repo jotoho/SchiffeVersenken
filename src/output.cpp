@@ -137,8 +137,52 @@ void printNumbers() {
     printf(" |\n");
 }
 
+static void printShipDistributionTable() {
+    using namespace std::string_view_literals;
+
+    std::cout
+        << "The board will be populated with ships of the following sizes:\n\n";
+
+    const auto maxShipSize = ShipDistribution.size() + 1U;
+    const auto maxShipAmount =
+        *std::max_element(ShipDistribution.begin(), ShipDistribution.end());
+
+    constexpr std::string_view lengthLabel = "Ship length"sv;
+    constexpr std::string_view amountLabel = "Number of ships"sv;
+
+    const auto maxShipSizeWidth =
+        std::max(std::max(lengthLabel.size(), static_cast<std::size_t>(1U)),
+                 static_cast<std::size_t>(std::ceil(std::log10(maxShipSize))));
+    const auto maxShipAmountWidth = std::max(
+        std::max(amountLabel.size(), static_cast<std::size_t>(1U)),
+        static_cast<std::size_t>(std::ceil(std::log10(maxShipAmount))));
+
+    std::cout << lengthLabel << " | " << amountLabel << '\n';
+    for (std::size_t dashCounter = 0;
+         dashCounter < lengthLabel.size() + amountLabel.size() + 3U;
+         dashCounter++)
+        std::cout << '-';
+    std::cout << '\n';
+
+    std::for_each(ShipDistribution.begin(), ShipDistribution.end(),
+                  [&maxShipSizeWidth, &maxShipAmountWidth,
+                   shipSize = 0ULL](const std::uint_least8_t amount) mutable {
+                      if (amount > 0) {
+                          std::cout << std::setw(maxShipSizeWidth) << shipSize++
+                                    << " | " << std::setw(maxShipAmountWidth)
+                                    << std::to_string(amount) << '\n';
+                      } else
+                          shipSize++;
+                  });
+
+    std::cout << std::endl;
+}
+
 /*
-    Used to print a short tutorial on game start
+    Used to print a short tutorial on game start.
+    This includes some gameplay instructions,
+    the table of which symbols represent what
+    and an overview of the ship amounts.
 */
 void printTutorial() {
     clearScreen();
@@ -158,6 +202,9 @@ void printTutorial() {
     for (size_t lines = 0; lines <= 70; lines++)
         std::cout << '-';
     std::cout << '\n';
+
+    printShipDistributionTable();
+
     waitForReturn();
 }
 /*
