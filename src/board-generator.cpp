@@ -42,7 +42,7 @@ static std::uint_fast32_t genRandom32bitVal() {
                   std::numeric_limits<std::int_least16_t>::max())
         return std::rand();
     else
-        return (static_cast<std::uint_fast32_t>(std::rand()) << 32U) |
+        return (static_cast<std::uint_fast32_t>(std::rand()) << 16U) |
                std::rand();
 }
 
