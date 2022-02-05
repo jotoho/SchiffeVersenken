@@ -18,24 +18,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <cstdlib>
 #include <ctime>
+#include <future>
 #include <iostream>
 #include "../include/board-generator.hpp"
 #include "../include/gamelogic.hpp"
 #include "../include/output.hpp"
 
 int main() {
-    // Give basic instructions to player
-    printTutorial();
-
     // Initialize RNG
     std::srand(std::time(nullptr));
 
     // Generate boards for both players
-    auto playerBoard = generateGameBoardRandom();
-    auto computerBoard = generateGameBoardRandom();
+    auto playerBoardFuture =
+        std::async(std::launch::async, generateGameBoardRandom);
+    auto computerBoardFuture =
+        std::async(std::launch::async, generateGameBoardRandom);
+
+    // Give basic instructions to player
+    printTutorial();
 
     // Try to determine the winner
-    const WinnerID winnerID = playGame(playerBoard, computerBoard);
+    const WinnerID winnerID =
+        playGame(playerBoardFuture.get(), computerBoardFuture.get());
 
     // Announce winner
     std::cout << "Player " << std::to_string(winnerID) << " has won!\n";

@@ -4,7 +4,7 @@ CXXFLAGS := -std=c++17 -Wall -Wextra -Werror -pedantic -pedantic-errors -march=n
 LDFLAGS := -Wl,--gc-sections
 
 schiffeversenken: $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
-	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o schiffeversenken
+	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o schiffeversenken -pthread
 
 schiffeversenken-sanitizing: $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
 	$(CXX) $(CXXFLAGS) -fsanitize=address -fsanitize=leak -fsanitize=undefined $^ $(LDFLAGS) -o schiffeversenken
