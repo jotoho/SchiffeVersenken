@@ -35,17 +35,25 @@ BoardType generateGameBoardEmpty() {
 
 // file-internal function for generating random value of 32-bit length
 static std::uint_fast32_t genRandom32bitVal() {
-    // std::rand() alone doesn't give enough guarantees regarding the size of
-    // RAND_MAX for my purposes
-    static auto randomNumberGenerator =
-        std::minstd_rand{static_cast<unsigned int>(std::rand())};
-    return randomNumberGenerator();
+    // Required to get around an annoying warning
+    constexpr int highestRandomValue = RAND_MAX;
+
+    if constexpr (highestRandomValue > std::numeric_limits<std::int_least16_t>::max())
+        return std::rand();
+    else
+        return (static_cast<std::uint_fast32_t>(std::rand()) << 32U) | std::rand();
 }
 
 // file-internal function for generating random value of 64-bit length
 static std::uint_fast64_t genRandom64bitVal() {
-    // Fuse two random 32-bit values into one 64-bit uint
-    return (genRandom32bitVal() << 32) | genRandom32bitVal();
+    // Required to get around an annoying warning
+    constexpr int highestRandomValue = RAND_MAX;
+
+    if constexpr (highestRandomValue > std::numeric_limits<std::int_least32_t>::max())
+        return std::rand();
+    else
+        // Fuse two random 32-bit values into one 64-bit uint
+        return (static_cast<std::uint_fast64_t>(genRandom32bitVal()) << 32) | genRandom32bitVal();
 }
 
 /*
