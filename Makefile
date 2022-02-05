@@ -1,5 +1,5 @@
 VERSION=\"$(shell git describe --tags --always --dirty)\"
-CXX := g++
+CXX := x86_64-w64-mingw32-g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -Werror -pedantic -pedantic-errors -march=native -mtune=native -fdata-sections -ffunction-sections -O2 -DSCHIFFEVERSENKEN_VERSION=$(VERSION)
 LDFLAGS := -Wl,--gc-sections
 
