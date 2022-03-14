@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <cstdint>
 #include <iostream>
-#include "./fieldinfo.hpp"
+#include "fieldinfo.hpp"
 
 using WinnerID = std::uint_least8_t;
 

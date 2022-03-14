@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ctime>
 #include <iostream>
 #include <stdexcept>
-#include "../include/boardpoint.hpp"
+#include "boardpoint.hpp"
 
 /*
     Shoots at adjacent field of the last hit location.

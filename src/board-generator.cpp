@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <random>
 #include <stdexcept>
 #include <vector>
-#include "../include/boardpoint.hpp"
+#include "boardpoint.hpp"
 
 /*
     Generates and returns a basic empty game board with all fields

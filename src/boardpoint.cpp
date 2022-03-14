@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <algorithm>
 #include <stdexcept>
 
-#include "../include/boardpoint.hpp"
+#include "boardpoint.hpp"
 
 /*
     Constructor for BoardPoint. It checks if the given coordinates are

@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define INCLUDE_GUARD_BOARDPOINT_HPP
 
 #include <vector>
-#include "./fieldinfo.hpp"
+#include "fieldinfo.hpp"
 
 // Boundschecked abstraction for points on the game board
 struct BoardPoint {

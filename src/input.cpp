@@ -20,8 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <cstdlib>
 #include <iostream>
 #include <type_traits>
-#include "../include/boardpoint.hpp"
-#include "../include/global-config.hpp"
+#include "boardpoint.hpp"
+#include "global-config.hpp"
 
 /*
     The version of gcc currently installed in the WPU is only

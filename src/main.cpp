@@ -21,9 +21,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ctime>
 #include <future>
 #include <iostream>
-#include "../include/board-generator.hpp"
-#include "../include/gamelogic.hpp"
-#include "../include/output.hpp"
+#include "board-generator.hpp"
+#include "gamelogic.hpp"
+#include "output.hpp"
 
 int main() {
     // Initialize RNG

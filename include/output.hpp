@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <iostream>
 #include <unordered_map>
-#include "./fieldinfo.hpp"
+#include "fieldinfo.hpp"
 
 // Information needed to represent state of field on screen
 struct BoardFieldFormat {

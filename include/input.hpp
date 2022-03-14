@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define INCLUDE_GUARD_INPUT_HPP
 
 #include <string>
-#include "./boardpoint.hpp"
+#include "boardpoint.hpp"
 
 // Reads target coordinates from user input
 // Throws if they could not be parsed

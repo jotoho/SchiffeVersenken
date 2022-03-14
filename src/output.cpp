@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "../include/output.hpp"
+#include "output.hpp"
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <unordered_map>
 
-#include "../include/fieldinfo.hpp"
-#include "../include/global-config.hpp"
+#include "fieldinfo.hpp"
+#include "global-config.hpp"
 
 void clearScreen() {
 #if _WIN32

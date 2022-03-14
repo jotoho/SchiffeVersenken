@@ -11,7 +11,8 @@ execute_process(
 project(SchiffeVersenken HOMEPAGE_URL "https://github.com/jotoho/SchiffeVersenken")
 
 set(SchiffeVersenken_VERSION "${GIT_DESC_VER}")
-file(REMOVE "${CMAKE_SOURCE_DIR}/include/global-config.hpp")
-configure_file(include/global-config.hpp.in "${CMAKE_SOURCE_DIR}/include/global-config.hpp")
+configure_file(include/global-config.hpp.in global-config.hpp)
+
+include_directories("include/" "${CMAKE_BINARY_DIR}")
 
 add_executable(SchiffeVersenken src/main.cpp src/ai.cpp src/board-generator.cpp src/boardpoint.cpp src/gamelogic.cpp src/input.cpp src/output.cpp)

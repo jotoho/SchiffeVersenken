@@ -17,17 +17,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "../include/gamelogic.hpp"
+#include "gamelogic.hpp"
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
 #include <limits>
-#include "../include/ai.hpp"
-#include "../include/boardpoint.hpp"
-#include "../include/fieldinfo.hpp"
-#include "../include/global-config.hpp"
-#include "../include/input.hpp"
-#include "../include/output.hpp"
+#include "ai.hpp"
+#include "boardpoint.hpp"
+#include "fieldinfo.hpp"
+#include "global-config.hpp"
+#include "input.hpp"
+#include "output.hpp"
 
 /*
     Scans if any ship parts on the given game board are still intact

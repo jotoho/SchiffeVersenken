@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef INCLUDE_GUARD_BOARDGEN_HPP
 #define INCLUDE_GUARD_BOARDGEN_HPP
 
-#include "./fieldinfo.hpp"
+#include "fieldinfo.hpp"
 
 // Returns an empty gameboard (all field set to EMPTY)
 BoardType generateGameBoardEmpty();

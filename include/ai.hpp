@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef INCLUDE_GUARD_AI_HPP
 #define INCLUDE_GUARD_AI_HPP
 
-#include "./boardpoint.hpp"
+#include "boardpoint.hpp"
 
 bool aiShotRandom(BoardType& board);
 void hitShip(BoardType& board, const BoardPoint& lastShot);
