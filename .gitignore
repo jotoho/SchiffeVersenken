@@ -3,3 +3,5 @@
 .vscode
 schiffeversenken
 *.exe
+/build/
+/include/global-config.hpp
