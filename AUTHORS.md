@@ -1,6 +1,6 @@
 # Authors of SchiffeVersenken
 
-## Maintainers / Core Developers
+## Developers
 
 | Full name | GitHub User | E-Mail | Website |
 |:----------|:------------|-------:|--------:|
