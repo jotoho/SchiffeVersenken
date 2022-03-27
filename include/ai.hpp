@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 /*
 SchiffeVersenken - An implementation of Battleships
 Copyright (C) 2022 SchiffeVersenken contributors
