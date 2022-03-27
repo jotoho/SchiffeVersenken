@@ -1,0 +1,52 @@
+name: 'Lock Threads'
+
+on:
+  schedule:
+    # Once a week at monday midnight
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: lock
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/lock-threads@v3
+        with:
+          github-token: ${{ github.token }}
+          issue-inactive-days: '60'
+          exclude-issue-created-before: ''
+          exclude-issue-created-after: ''
+          exclude-issue-created-between: ''
+          exclude-issue-closed-before: ''
+          exclude-issue-closed-after: ''
+          exclude-issue-closed-between: ''
+          include-any-issue-labels: ''
+          include-all-issue-labels: ''
+          exclude-any-issue-labels: ''
+          add-issue-labels: ''
+          remove-issue-labels: ''
+          issue-comment: ''
+          issue-lock-reason: 'resolved'
+          pr-inactive-days: '60'
+          exclude-pr-created-before: ''
+          exclude-pr-created-after: ''
+          exclude-pr-created-between: ''
+          exclude-pr-closed-before: ''
+          exclude-pr-closed-after: ''
+          exclude-pr-closed-between: ''
+          include-any-pr-labels: ''
+          include-all-pr-labels: ''
+          exclude-any-pr-labels: ''
+          add-pr-labels: ''
+          remove-pr-labels: ''
+          pr-comment: ''
+          pr-lock-reason: 'resolved'
+          process-only: ''
+          log-output: false
