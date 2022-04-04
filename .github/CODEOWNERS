@@ -1,0 +1,27 @@
+# This file lists the required experts on specific parts of the repository
+
+# If no other rule applies (additional reviewers may be manually requested)
+* @jotoho
+
+# Repository management, CI & Documentation
+/.github/* @jotoho
+/.clang-format @jotoho
+/LICENSE* @jotoho
+*.sh @jotoho
+*.md @jotoho
+
+# Game AI
+/include/ai.hpp @Pfege @jotoho
+/src/ai.cpp @Pfege @jotoho
+
+# Terminal Input & Output
+/include/input.hpp @TimBeckmann
+/include/output.hpp @TimBeckmann
+/src/input.cpp @TimBeckmann
+/src/output.cpp @TimBeckmann
+
+# Board generation logic
+/include/board-generator.hpp @jotoho
+/include/boardpoint.hpp @jotoho
+/src/board-generator.cpp @jotoho
+/src/boardpoint.cpp @jotoho
