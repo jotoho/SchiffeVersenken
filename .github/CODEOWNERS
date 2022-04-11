@@ -11,8 +11,8 @@
 *.md @jotoho
 
 # Game AI
-/include/ai.hpp @Pfege @jotoho
-/src/ai.cpp @Pfege @jotoho
+/include/ai.hpp @jotoho
+/src/ai.cpp @jotoho
 
 # Terminal Input & Output
 /include/input.hpp @TimBeckmann
